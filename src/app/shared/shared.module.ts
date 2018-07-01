@@ -25,11 +25,11 @@ const materials = [
   ],
   exports: [Main, AlertDialog, ConfirmDialog, LoginFormComponent, LogoutDirective],
   declarations: [Main, AlertDialog, ConfirmDialog, LoginDialog, LogoutDirective, LoginFormComponent],
-  providers: [AuthGuard, AdminGuard],
+  //providers: [AuthGuard, AdminGuard],
   entryComponents: [AlertDialog, ConfirmDialog, LoginDialog]
 })
 export class SharedModule {
-  forRoot(): ModuleWithProviders {
+  static forRoot(): ModuleWithProviders {
     return {
       ngModule: SharedModule,
       providers: [AuthGuard, AdminGuard]

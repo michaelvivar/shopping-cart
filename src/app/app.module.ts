@@ -26,14 +26,16 @@ const ngxs = [
 ];
 
 import { ServiceLocator } from './utils/service-locator';
+import { ServiceModule } from './services/service.module';
 
 @NgModule({
   imports: [BrowserModule, FormsModule, ReactiveFormsModule, HttpClientModule, BrowserAnimationsModule,
     RouterModule.forRoot([
-      { path: 'admin', loadChildren: './admin/admin.module#AdminModule' },
+      { path: 'admin', loadChildren: './admin/admin.module#AdminModule', data: { preload: false} },
       { path: '', loadChildren: './pages/page.module#PageModule' }
     ], { preloadingStrategy: ModulePreloadingStrategy }),
-    SharedModule,
+    SharedModule.forRoot(),
+    ServiceModule.forFirestore(),
     ...ngxs,
     ...materials
   ],

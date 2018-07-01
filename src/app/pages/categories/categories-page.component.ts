@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  template: '<h1>Categories</h1>'
+  templateUrl: './categories-page.template.html'
 })
 export class CategoriesPage {
   
