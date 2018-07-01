@@ -16,13 +16,18 @@ const materials = [
    MatDialogModule, MatButtonModule, MatFormFieldModule, MatInputModule, MatCardModule
 ];
 
+import { SortPipe } from '~shared/pipes/sort.pipe';
+const pipes = [
+   SortPipe
+];
+
 @NgModule({
    imports: [
       CommonModule, RouterModule, FormsModule, ReactiveFormsModule,
       ...materials
    ],
-   exports: [Main, AlertDialog, ConfirmDialog, LoginFormComponent, LogoutDirective],
-   declarations: [Main, AlertDialog, ConfirmDialog, LogoutDirective, LoginFormComponent],
+   exports: [...pipes, Main, AlertDialog, ConfirmDialog, LoginFormComponent, LogoutDirective],
+   declarations: [...pipes, Main, AlertDialog, ConfirmDialog, LogoutDirective, LoginFormComponent],
    //providers: [AuthGuard, AdminGuard],
    entryComponents: [AlertDialog, ConfirmDialog]
 })
@@ -30,7 +35,7 @@ export class SharedModule {
    static forRoot(): ModuleWithProviders {
       return {
          ngModule: SharedModule,
-         providers: [AuthGuard, AdminGuard]
+         providers: [AuthGuard, AdminGuard, ...pipes]
       }
    }
 }

@@ -50,8 +50,7 @@ const ngxs = [
    bootstrap: [AppComponent],
    providers: [
       ModulePreloadingStrategy,
-      { provide: 'API_URL', useValue: 'https://firestore.googleapis.com/v1beta1/projects/cinemax-db/databases/(default)/documents/' },
-      { provide: HTTP_INTERCEPTORS, useClass: ApiInterceptor, multi: true }
+      { provide: 'API_URL', useValue: 'https://firestore.googleapis.com/v1beta1/projects/cinemax-db/databases/(default)/documents/' }
    ]
 })
 export class AppModule {

@@ -36,6 +36,9 @@
          "~utils/*": [
             "app/utils/*"
          ],
+         "~models/*": [
+            "app/models/*"
+         ],
          "~environment/*": [
             "environments/*"
          ]
