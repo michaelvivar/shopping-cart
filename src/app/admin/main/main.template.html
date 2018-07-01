@@ -1,0 +1,37 @@
+<mat-sidenav-container class="sidenav-container" (backdropClick)="close('backdrop')">
+    <mat-sidenav
+        #drawer
+        class="sidenav"
+        fixedInViewport="false"
+        fixedBottomGap="0"
+        fixedTopGap="0"
+        [disableClose]="true"
+        [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+        [mode]="(isHandset$ | async) ? 'over' : 'side'"
+    [opened]="!(isHandset$ | async)">
+        <mat-toolbar color="primary">Menu</mat-toolbar>
+        <mat-nav-list>
+        <a mat-list-item (click)="close()" [routerLink]="['/admin/products']" routerLinkActive="active"><mat-icon>store_mall_directory</mat-icon>Products</a>
+        <a mat-list-item (click)="close()" [routerLink]="['/admin/categories']" routerLinkActive="active"><mat-icon>category</mat-icon>Categories</a>
+        <a mat-list-item (click)="close()" [routerLink]="['/account']" routerLinkActive="active"><mat-icon>group</mat-icon>Users</a>
+        <a mat-list-item (click)="close()" [routerLink]="['/']" routerLinkActive="active"><mat-icon>public</mat-icon>Website</a>
+        </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <mat-toolbar color="primary">
+        <button
+            type="button"
+            aria-label="Toggle sidenav"
+            mat-icon-button
+            (click)="drawer.toggle()"
+            *ngIf="isHandset$ | async">
+            <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+        </button>
+        &nbsp;
+        <div>{{ name }}</div>
+        </mat-toolbar>
+        <div class="main">
+            <router-outlet></router-outlet>
+        </div>
+    </mat-sidenav-content>
+</mat-sidenav-container>  
