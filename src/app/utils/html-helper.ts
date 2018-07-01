@@ -1,12 +1,12 @@
 import { DomSanitizer } from '@angular/platform-browser';
-import { ServiceLocator } from './service-locator';
+import { ServiceLocator } from '~utils/service-locator';
 
 export function safeHtml(content: any) {
-  const domSanitizer: DomSanitizer = ServiceLocator.injector.get(DomSanitizer);
-  return domSanitizer.bypassSecurityTrustHtml(content);
+   const domSanitizer: DomSanitizer = ServiceLocator.injector.get(DomSanitizer);
+   return domSanitizer.bypassSecurityTrustHtml(content);
 }
 
 export function safeUrl(url: string) {
-  const domSanitizer: DomSanitizer = ServiceLocator.injector.get(DomSanitizer);
-  return domSanitizer.bypassSecurityTrustResourceUrl(url);
+   const domSanitizer: DomSanitizer = ServiceLocator.injector.get(DomSanitizer);
+   return domSanitizer.bypassSecurityTrustResourceUrl(url);
 }

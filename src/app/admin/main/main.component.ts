@@ -5,9 +5,9 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { MatSidenav } from '@angular/material';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './main.template.html',
-  styles: [`
+   selector: 'app-root',
+   templateUrl: './main.template.html',
+   styles: [`
     .sidenav-container {
         height: 100%;
       }
@@ -19,25 +19,25 @@ import { MatSidenav } from '@angular/material';
   `]
 })
 export class Main {
-    isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
+   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
       .pipe(
-        map(result => result.matches)
+         map(result => result.matches)
       ).pipe(tap(value => this.handset = value));
 
-    name: string;
-    handset: boolean;
-      
-    constructor(private breakpointObserver: BreakpointObserver) {}
+   name: string;
+   handset: boolean;
 
-    ngOnInit(): void {
+   constructor(private breakpointObserver: BreakpointObserver) { }
+
+   ngOnInit(): void {
       this.name = 'Admin';
-    }
+   }
 
-    @ViewChild('drawer') sidenav: MatSidenav;
+   @ViewChild('drawer') sidenav: MatSidenav;
 
-    close() {
+   close() {
       if (this.handset) {
-        this.sidenav.close();
+         this.sidenav.close();
       }
-    }
+   }
 }

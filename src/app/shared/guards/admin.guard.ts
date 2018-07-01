@@ -7,18 +7,18 @@ import { map, tap } from 'rxjs/operators';
 @Injectable()
 export class AdminGuard implements CanActivate {
 
-  constructor(private router: Router) { }
+   constructor(private router: Router) { }
 
-  @Select(store => store.app.user) user$: Observable<any>;
+   @Select(store => store.app.user) user$: Observable<any>;
 
-  canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-    return this.user$.pipe(map(user => {
-      return (user && user.type == 'admin') ? true : false;
-    }))
-      .pipe(tap(value => {
-        if (!value) {
-          this.router.navigate(['/']);
-        }
+   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
+      return this.user$.pipe(map(user => {
+         return (user && user.type == 'admin') ? true : false;
       }))
-  }
+         .pipe(tap(value => {
+            if (!value) {
+               this.router.navigate(['/']);
+            }
+         }))
+   }
 }

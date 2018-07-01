@@ -7,18 +7,18 @@ import { map, tap } from 'rxjs/operators';
 @Injectable()
 export class AuthGuard implements CanActivate {
 
-  constructor(private router: Router) { }
+   constructor(private router: Router) { }
 
-  @Select(store => store.app.user) user$: Observable<any>;
+   @Select(store => store.app.user) user$: Observable<any>;
 
-  canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-    return this.user$.pipe(map(user => {
-      return (user) ? true : false;
-    }))
-      .pipe(tap(value => {
-        if (!value) {
-          this.router.navigate(['/login']);
-        }
+   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
+      return this.user$.pipe(map(user => {
+         return (user) ? true : false;
       }))
-  }
+         .pipe(tap(value => {
+            if (!value) {
+               this.router.navigate(['/login']);
+            }
+         }))
+   }
 }
