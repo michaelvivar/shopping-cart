@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-   template: ''
+  templateUrl: './confirm-dialog.template.html'
 })
 export class ConfirmDialog {
 

@@ -1,0 +1,10 @@
+<mat-form-field>
+   <input time-input="hour" type="text" [formControl]="time.controls['hour']" matInput autocomplete="false" maxlength="2" />
+</mat-form-field>
+<span> : </span>
+<mat-form-field>
+   <input time-input="minute" type="text" [formControl]="time.controls['minute']" matInput autocomplete="false" maxlength="2"
+   />
+</mat-form-field>
+&nbsp;
+<button mat-raised-button [color]="color" (click)="toggleTimeMeridian()">{{ meridian }}</button>

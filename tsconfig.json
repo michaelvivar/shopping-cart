@@ -18,28 +18,28 @@
       ],
       "baseUrl": "src",
       "paths": {
-         "~admin/*": [
+         "~/admin/*": [
             "app/admin/"
          ],
-         "~pages/*": [
-            "app/pages/*"
+         "~/components": [
+            "app/components/index.ts"
          ],
-         "~shared/*": [
-            "app/shared/*"
+         "~/elements": [
+            "app/elements/index.ts"
          ],
-         "~services/*": [
+         "~/shared": [
+            "app/shared/index.ts"
+         ],
+         "~/modules/*": [
+            "app/modules/*"
+         ],
+         "~/services/*": [
             "app/services/*"
          ],
-         "~store/*": [
+         "~/store/*": [
             "app/store/*"
          ],
-         "~utils/*": [
-            "app/utils/*"
-         ],
-         "~models/*": [
-            "app/models/*"
-         ],
-         "~environment/*": [
+         "~/environments/*": [
             "environments/*"
          ]
       }

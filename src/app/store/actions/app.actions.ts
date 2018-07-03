@@ -1,4 +1,4 @@
-export class SetAppUser {
+export class AppUser {
    static readonly type = '[USER] Set';
 
    constructor(public payload: any) { }

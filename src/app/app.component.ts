@@ -1,13 +1,31 @@
 import { Component } from '@angular/core';
+import { Router, NavigationStart, NavigationEnd, NavigationCancel, NavigationError, Event } from '@angular/router';
 import { Store } from '@ngxs/store';
-import { SetAppUser } from '~store/actions/app.actions';
 
 @Component({
-   selector: 'my-app',
-   template: '<router-outlet></router-outlet>'
+   selector: 'app-root',
+   templateUrl: './app.component.html',
+   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-   constructor(store: Store) {
-      //store.dispatch(new SetAppUser({ username: 'michaelvivar', type: 'admin' }))
+
+   constructor(router: Router, store: Store) {
+
+      router.events.subscribe((event: Event) => {
+         if (event instanceof NavigationStart) {
+            this.progress = 5;
+         }
+         else if (event instanceof NavigationEnd) {
+            this.progress = 100;
+         }
+         else if (event instanceof NavigationCancel) {
+            this.progress = 100;
+         }
+         else if (event instanceof NavigationError) {
+            router.navigate(['error']);
+         }
+      })
    }
+
+   progress: number = 0;
 }

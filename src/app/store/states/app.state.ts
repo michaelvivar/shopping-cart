@@ -1,5 +1,5 @@
-import { State, Action, StateContext } from '@ngxs/store';
-import { SetAppUser, RemoveAppUser } from '~store/actions/app.actions';
+import { State, StateContext, Action } from "@ngxs/store";
+import { AppUser, RemoveAppUser } from "~/store/actions/app.actions";
 
 interface AppStateModel {
    user: any;
@@ -12,8 +12,8 @@ interface AppStateModel {
    }
 })
 export class AppState {
-   @Action(SetAppUser)
-   setAppUser(context: StateContext<AppStateModel>, { payload }: SetAppUser) {
+   @Action(AppUser)
+   appUser(context: StateContext<AppStateModel>, { payload }: AppUser) {
       context.patchState({ user: payload });
    }
 

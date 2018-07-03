@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { sortBy } from '~utils/array-helper';
+import { sortBy } from '../utils/array-helper';
 
 @Pipe({
    name: 'sort'

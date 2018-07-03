@@ -1,0 +1,28 @@
+<mat-sidenav-container class="sidenav-container" (backdropClick)="close('backdrop')">
+   <mat-sidenav #drawer class="sidenav" fixedInViewport="false" fixedBottomGap="0" fixedTopGap="0" [disableClose]="true" [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+      [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="!(isHandset$ | async)">
+      <mat-toolbar [color]="color">Menu</mat-toolbar>
+      <mat-nav-list>
+         <ng-container *ngFor="let nav of navs">
+            <a mat-list-item (click)="close()" [routerLink]="nav.link" routerLinkActive="active">
+               <mat-icon>{{ nav.icon }}</mat-icon> {{ nav.label }}
+            </a>
+         </ng-container>
+      </mat-nav-list>
+   </mat-sidenav>
+   <mat-sidenav-content>
+      <mat-toolbar [color]="color">
+         <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()" *ngIf="isHandset$ | async">
+            <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+         </button>
+         &nbsp;
+         <div>{{ title }}</div>
+      </mat-toolbar>
+      <div class="main">
+         <div>
+            <mat-progress-bar [color]="color" mode="determinate" [value]="progress"></mat-progress-bar>
+         </div>
+         <router-outlet></router-outlet>
+      </div>
+   </mat-sidenav-content>
+</mat-sidenav-container>

@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
+import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router, CanActivateChild } from '@angular/router';
 import { Select } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 
 @Injectable()
-export class AuthGuard implements CanActivate {
+export class AuthGuard implements CanActivate, CanActivateChild {
 
    constructor(private router: Router) { }
 
@@ -13,12 +13,18 @@ export class AuthGuard implements CanActivate {
 
    canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
       return this.user$.pipe(map(user => {
-         return (user) ? true : false;
+         if (user || state.url == '/account/login' || state.url == '/account/signup') {
+            return true;
+         }
+         return false;
+      })).pipe(tap(value => {
+         if (!value) {
+            this.router.navigate(['/account/login']);
+         }
       }))
-         .pipe(tap(value => {
-            if (!value) {
-               this.router.navigate(['/login']);
-            }
-         }))
+   }
+
+   canActivateChild(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
+      return this.canActivate(next, state);
    }
 }

@@ -1,60 +1,53 @@
 import { NgModule, Injector } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
-import { AppComponent } from './app.component';
+import { FormsModule } from '@angular/forms';
 
 import { NgxsModule } from '@ngxs/store';
 import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 
-import { AngularFirestoreModule } from "angularfire2/firestore";
+import { AppComponent } from './app.component';
+import { PageState } from '~/store/states/page.state';
+import { SharedModule, AuthGuard, AdminGuard, ModulePreloadingStrategy } from '~/shared';
+import { RouterModule } from '@angular/router';
+import { AppState } from '~/store/states/app.state';
 import { AngularFireModule } from 'angularfire2';
-
-import { SharedModule } from '~shared/shared.module';
-import { ServiceModule } from '~services/service.module';
-import { ServiceLocator } from '~utils/service-locator';
-import { ModulePreloadingStrategy } from '~utils/preloading-strategy';
-import { ApiInterceptor } from '~services/interceptors/api.interceptor';
-import { AppState } from '~store/states/app.state';
-import { environment } from '~environment/environment';
-
-import { MatButtonModule, MatDialogModule } from '@angular/material';
-
-const materials = [MatButtonModule, MatDialogModule];
-
-const ngxs = [
-   NgxsModule.forRoot([AppState]),
-   NgxsLoggerPluginModule.forRoot(),
-   NgxsReduxDevtoolsPluginModule.forRoot()
-];
-
+import { AngularFirestoreModule } from 'angularfire2/firestore';
+import { environment } from '~/environments/environment';
+import { ServiceModule } from '~/services/service.module';
 
 @NgModule({
-   imports: [BrowserModule, FormsModule, ReactiveFormsModule, HttpClientModule, BrowserAnimationsModule,
+   imports: [
+      BrowserModule, FormsModule, BrowserAnimationsModule,
       RouterModule.forRoot([
-         { path: 'admin', loadChildren: './admin/admin.module#AdminModule', data: { preload: false } },
-         { path: '', loadChildren: './pages/page.module#PageModule' }
+         { path: 'account', loadChildren: '~/modules/account/account.module#AccountModule', canActivate: [AuthGuard], canActivateChild: [AuthGuard] },
+         { path: 'admin', loadChildren: '~/modules/admin/admin.module#AdminModule', canActivate: [AdminGuard], data: { preload: false } },
+         { path: '', loadChildren: '~/modules/main/main.module#MainModule' }
       ], { preloadingStrategy: ModulePreloadingStrategy }),
       AngularFireModule.initializeApp(environment.firebase),
       AngularFirestoreModule,
-      SharedModule.forRoot(),
-      ServiceModule.forFirestore(),
-      ...ngxs,
-      ...materials
+      NgxsModule.forRoot([AppState, PageState]),
+      NgxsLoggerPluginModule.forRoot(),
+      NgxsReduxDevtoolsPluginModule.forRoot(),
+      SharedModule,
+      ServiceModule.forFirestore()
    ],
    declarations: [AppComponent],
    bootstrap: [AppComponent],
    providers: [
-      ModulePreloadingStrategy,
-      { provide: 'API_URL', useValue: 'https://firestore.googleapis.com/v1beta1/projects/cinemax-db/databases/(default)/documents/' }
+      { provide: 'TITLE', useValue: 'Application' },
+      { provide: 'COLOR', useValue: 'primary' },
+      {
+         provide: 'SIDENAVS',
+         useValue: [
+            { label: 'Home', link: '', icon: 'home' },
+            { label: 'Categories', link: '/categories', icon: 'category' },
+            { label: 'Cart', link: '/cart', icon: 'shopping_cart' },
+            { label: 'Account', link: '/account', icon: 'account_circle' }
+         ]
+      }
    ]
 })
 export class AppModule {
-   constructor(private injector: Injector) {
-      ServiceLocator.injector = this.injector;
-   }
 }
