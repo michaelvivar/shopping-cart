@@ -1,23 +1,30 @@
-<mat-card class="mat-elevation-z0">
-   <mat-card-content>
-      <mat-form-field class="display-block">
-         <input type="text" matInput placeholder="Username" [formControl]="form.controls['username']" />
-      </mat-form-field>
-      <mat-form-field class="display-block">
-         <input type="password" matInput placeholder="Password" [formControl]="form.controls['password']" />
-      </mat-form-field>
-      <div class="text-center">
-         <button mat-raised-button color="primary" (click)="submit()" [disabled]="form.invalid || form.untouched || submitted">Log In</button>
-         &nbsp;
-         <button mat-raised-button color="primary" routerLink="/account/signup" [disabled]="form.valid">Sign Up</button>
+<div class="container">
+   <div class="row">
+      <div class="col-12">
+         <mat-form-field>
+            <input type="text" matInput placeholder="Username" [formControl]="form.controls['username']" autocomplete="off" />
+         </mat-form-field>
       </div>
-      <!-- <br/>
-      <br/>
-      <p>
-         <button mat-raised-button color="primary" style="width:100%">Login with Facebook</button>
-      </p>
-      <p>
-         <button mat-raised-button color="primary" style="width:100%">Login with Twitter</button>
-      </p> -->
-   </mat-card-content>
-</mat-card>
+      <div class="col-12">
+         <mat-form-field>
+            <input type="password" matInput placeholder="Password" [formControl]="form.controls['password']" />
+         </mat-form-field>
+      </div>
+   </div>
+   <div class="row">
+      <div class="col-12">
+         <div class="text-center">
+            <button mobile-class="btn-block" mat-raised-button color="accent" (click)="submit()" [disabled]="form.invalid || form.untouched || submitted">Log In</button>
+            <a mobile-class="btn-block" mat-button routerLink="/account/signup" [disabled]="form.valid">Sign Up</a>
+         </div>
+      </div>
+   </div>
+</div>
+<!-- <br/>
+   <br/>
+   <p>
+      <button mat-raised-button color="primary" style="width:100%">Login with Facebook</button>
+   </p>
+   <p>
+      <button mat-raised-button color="primary" style="width:100%">Login with Twitter</button>
+   </p> -->

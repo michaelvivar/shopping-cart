@@ -4,6 +4,9 @@ import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { MatSidenav } from '@angular/material';
+import { RouterService } from '../../services/router.service';
+import { Location } from '@angular/common';
+import { Select } from '@ngxs/store';
 
 @Component({
    selector: 'app-root',
@@ -13,33 +16,43 @@ import { MatSidenav } from '@angular/material';
         height: 100%;
     }
     .sidenav {
-        width: 200px;
-        box-shadow: 3px 0 6px rgba(0,0,0,.24);
+        width: 260px;
+        box-shadow: 1px 0 2px rgba(0,0,0,.24);
     }
-  `]
+    .logo {
+       width: 30px;
+       margin: 0 10px;
+    }
+  `],
+   providers: [RouterService]
 })
 export class DefaultLayoutComponent {
 
    constructor(
-      router: Router,
+      private router: Router,
       private breakpointObserver: BreakpointObserver,
+      private routerService: RouterService,
+      private location: Location,
       @Inject('TITLE') public title: string,
       @Inject('SIDENAVS') public navs: any[],
-      @Inject('COLOR') public color: string
+      @Inject('THEME') public theme: string
    ) {
-
       router.events.subscribe((event: Event) => {
          if (event instanceof NavigationStart) {
             this.progress = 5;
          }
          else if (event instanceof NavigationEnd) {
-            this.progress = 100;
+            this.progress = 90;
+            setTimeout(_ => this.progress = 100, 1000);
          }
          else if (event instanceof NavigationCancel) {
-            this.progress = 100;
+            this.progress = 90;
+            setTimeout(_ => this.progress = 100, 1000);
          }
          else if (event instanceof NavigationError) {
-            router.navigate(['error']);
+            this.progress = 90;
+            setTimeout(_ => this.progress = 100, 1000);
+            // router.navigate(['error']);
          }
       })
    }
@@ -53,11 +66,17 @@ export class DefaultLayoutComponent {
 
    handset: boolean;
 
+   @Select(store => store.page) page$: Observable<any>;
+
    @ViewChild('drawer') sidenav: MatSidenav;
 
-   close() {
+   closeSideNav() {
       if (this.handset) {
          setTimeout(() => this.sidenav.close(), 0);
       }
+   }
+
+   back() {
+      this.location.back();
    }
 }

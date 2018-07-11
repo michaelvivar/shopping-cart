@@ -1,8 +1,8 @@
 import { NgModule, ModuleWithProviders, Injectable } from "@angular/core";
-import { UserService } from "./user/user.service";
-import { CategoryService } from "./category/category.service";
-import { UserStore } from "./user/user.store";
-import { CategoryStore } from "./category/category.store";
+import { UserService } from "~/services/user/user.service";
+import { CategoryService } from "~/services/category/category.service";
+import { UserStore } from "~/services/user/user.store";
+import { CategoryStore } from "~/services/category/category.store";
 
 @NgModule({
 })

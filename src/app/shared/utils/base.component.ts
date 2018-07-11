@@ -10,6 +10,8 @@ import { ConfirmDialog } from '../components/confirm-dialog/confirm-dialog.compo
 export abstract class BaseComponent {
    constructor() {
       this.store = ServiceLocator.injector.get(Store);
+      this.dialog = ServiceLocator.injector.get(MatDialog);
+      //this.location = ServiceLocator.injector.get(Location);
    }
    protected store: Store;
    protected dialog: MatDialog;
@@ -52,5 +54,10 @@ export abstract class Page extends BaseComponent {
 
    set title(value: string) {
       this.store.dispatch(new PageTitle(value));
+   }
+
+   ngOnDestroy() {
+      this.store.dispatch(new PageTitle(null));
+      super.ngOnDestroy();
    }
 }

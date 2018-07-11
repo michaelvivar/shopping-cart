@@ -5,7 +5,9 @@ import { SharedModule, DefaultLayoutComponent } from '~/shared';
 import { HomePage } from '~/modules/main/pages/home/home-page.component';
 import { CategoriesResolver } from '~/services/resolvers/category.resolver';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { NavListComponent, NavListModule } from '~/components';
+import { MatButtonModule } from '@angular/material';
+import { CategoriesPage } from '~/modules/main/pages/categories/categories-page.component';
+import { CartPage } from '~/modules/main/pages/cart/cart-page.component';
 
 @NgModule({
    imports: [
@@ -13,19 +15,23 @@ import { NavListComponent, NavListModule } from '~/components';
       RouterModule.forChild([
          {
             path: '', component: DefaultLayoutComponent, children: [
-               { path: 'categories', component: NavListComponent, resolve: { navs: CategoriesResolver } },
-               { path: '**', component: HomePage }
+               { path: 'categories', component: CategoriesPage, resolve: { categories: CategoriesResolver } },
+               { path: 'cart', component: CartPage },
+               { path: '', component: HomePage }
             ]
          }
       ]),
-      SharedModule, NavListModule
+      MatButtonModule,
+      SharedModule
    ],
    exports: [],
    declarations: [
-      HomePage
+      HomePage,
+      CategoriesPage,
+      CartPage
    ],
    providers: [
-      { provide: 'TITLE', useValue: 'Shopping Cart' }
+      { provide: 'TITLE', useValue: 'Home' }
    ]
 })
 export class MainModule {

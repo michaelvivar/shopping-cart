@@ -1,8 +1,9 @@
 import { Injectable } from "@angular/core";
+import { Category } from "~/services/models/category.model";
 
 @Injectable()
 export class CategoryService {
-   getAllActive() {
-
+   getAllActive(): Promise<Category[]> {
+      return null;
    }
 }

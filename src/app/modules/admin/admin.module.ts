@@ -8,14 +8,18 @@ import { SharedModule, DefaultLayoutComponent } from "~/shared";
    imports: [
       CommonModule, FormsModule, ReactiveFormsModule,
       RouterModule.forChild([
-         { path: '', component: DefaultLayoutComponent }
+         {
+            path: '', component: DefaultLayoutComponent, children: [
+               { path: 'categories', loadChildren: './categories/category.module#CategoryModule' }
+            ]
+         }
       ]),
       SharedModule
    ],
    declarations: [],
    providers: [
       { provide: 'TITLE', useValue: 'Admin' },
-      { provide: 'COLOR', useValue: 'accent' },
+      { provide: 'THEME', useValue: 'admin-theme' },
       {
          provide: 'SIDENAVS',
          useValue: [

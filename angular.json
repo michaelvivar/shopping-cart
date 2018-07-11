@@ -26,6 +26,7 @@
                      {
                         "input": "src/theme.scss"
                      },
+                     "src/bootstrap-grid.min.css",
                      "src/styles.css"
                   ],
                   "scripts": []

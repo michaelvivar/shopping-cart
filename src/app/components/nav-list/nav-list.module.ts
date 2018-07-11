@@ -7,8 +7,7 @@ import { NavListComponent } from "./nav-list.component";
 @NgModule({
    imports: [CommonModule, RouterModule, MatListModule, MatDividerModule, MatIconModule],
    exports: [NavListComponent],
-   declarations: [NavListComponent]
+   declarations: [NavListComponent],
 })
 export class NavListModule {
-
 }

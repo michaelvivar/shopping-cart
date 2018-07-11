@@ -16,10 +16,12 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { environment } from '~/environments/environment';
 import { ServiceModule } from '~/services/service.module';
+import { TestElementComponent } from './elements/test-element.component';
+import { createCustomElement } from '@angular/elements';
 
 @NgModule({
    imports: [
-      BrowserModule, FormsModule, BrowserAnimationsModule,
+      BrowserModule, BrowserAnimationsModule,
       RouterModule.forRoot([
          { path: 'account', loadChildren: '~/modules/account/account.module#AccountModule', canActivate: [AuthGuard], canActivateChild: [AuthGuard] },
          { path: 'admin', loadChildren: '~/modules/admin/admin.module#AdminModule', canActivate: [AdminGuard], data: { preload: false } },
@@ -33,11 +35,11 @@ import { ServiceModule } from '~/services/service.module';
       SharedModule,
       ServiceModule.forFirestore()
    ],
-   declarations: [AppComponent],
+   declarations: [AppComponent, TestElementComponent],
    bootstrap: [AppComponent],
    providers: [
       { provide: 'TITLE', useValue: 'Application' },
-      { provide: 'COLOR', useValue: 'primary' },
+      { provide: 'THEME', useValue: 'default-theme' },
       {
          provide: 'SIDENAVS',
          useValue: [
@@ -47,7 +49,12 @@ import { ServiceModule } from '~/services/service.module';
             { label: 'Account', link: '/account', icon: 'account_circle' }
          ]
       }
-   ]
+   ],
+   entryComponents: [TestElementComponent]
 })
 export class AppModule {
+   constructor(injector: Injector) {
+      const ele = createCustomElement(TestElementComponent, { injector: injector });
+      customElements.define('my-form', ele);
+   }
 }
