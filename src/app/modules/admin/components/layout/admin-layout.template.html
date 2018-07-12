@@ -1,0 +1,32 @@
+<mat-sidenav-container class="sidenav-container" [ngClass]="theme" (backdropClick)="drawer.close()">
+   <mat-sidenav #drawer class="sidenav" fixedInViewport="false" fixedBottomGap="0" fixedTopGap="0" [disableClose]="true" [attr.role]="'navigation'"
+      [mode]="'side'" [opened]="true" autoFocus="false">
+      <mat-toolbar color="primary">
+         <img class="logo" src="/assets/img/angular-logo.png" />
+         <div class="text-center">Administrator</div>
+      </mat-toolbar>
+      <div class="container">
+         <mat-nav-list>
+            <ng-container *ngFor="let nav of navs">
+               <a mat-list-item [routerLink]="nav.link" routerLinkActive="active">
+                  <mat-icon>{{ nav.icon }}</mat-icon> {{ nav.label }}
+               </a>
+            </ng-container>
+         </mat-nav-list>
+      </div>
+   </mat-sidenav>
+   <mat-sidenav-content>
+      <mat-toolbar color="primary">
+         <back-button></back-button>
+         <div class="page-title">
+            <page-title></page-title>
+         </div>
+         <span class="flex-spacer"></span>
+         <button-action></button-action>
+      </mat-toolbar>
+      <div class="main">
+         <progress-bar></progress-bar>
+         <router-outlet></router-outlet>
+      </div>
+   </mat-sidenav-content>
+</mat-sidenav-container>

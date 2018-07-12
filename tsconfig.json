@@ -30,9 +30,6 @@
          "~/shared": [
             "app/shared/index.ts"
          ],
-         "~/modules/*": [
-            "app/modules/*"
-         ],
          "~/services/*": [
             "app/services/*"
          ],

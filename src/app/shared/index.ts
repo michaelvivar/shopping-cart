@@ -1,10 +1,12 @@
 export * from './shared.module';
 
 export * from './layouts/default/default-layout.component';
+export * from './layouts/mobile/mobile-layout.component';
 
 export * from './utils/array-helper';
 export * from './utils/base.component';
-export * from './utils/form.base.component';
+export * from './utils/form-base.component';
+export * from './utils/table-base.component';
 export * from './utils/html-helper';
 export * from './utils/preloading-strategy';
 export * from './utils/service-locator';

@@ -23,9 +23,8 @@ import { createCustomElement } from '@angular/elements';
    imports: [
       BrowserModule, BrowserAnimationsModule,
       RouterModule.forRoot([
-         { path: 'account', loadChildren: '~/modules/account/account.module#AccountModule', canActivate: [AuthGuard], canActivateChild: [AuthGuard] },
-         { path: 'admin', loadChildren: '~/modules/admin/admin.module#AdminModule', canActivate: [AdminGuard], data: { preload: false } },
-         { path: '', loadChildren: '~/modules/main/main.module#MainModule' }
+         { path: 'admin', loadChildren: './modules/admin/admin.module#AdminModule', canActivate: [AdminGuard], canActivateChild: [AdminGuard], data: { preload: false } },
+         { path: '', loadChildren: './modules/main/main.module#MainModule' }
       ], { preloadingStrategy: ModulePreloadingStrategy }),
       AngularFireModule.initializeApp(environment.firebase),
       AngularFirestoreModule,

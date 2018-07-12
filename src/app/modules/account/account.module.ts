@@ -1,31 +1,23 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { SharedModule, DefaultLayoutComponent } from '~/shared';
+import { SharedModule, DefaultLayout } from '~/shared';
 import { RouterModule } from '@angular/router';
-import {
-   SignupFormComponent, LoginFormComponent,
-   NavListModule, NavListComponent
-} from '~/components';
+import { NavListModule, NavListComponent } from '~/components';
 import { UserNavsResolver } from '~/services/resolvers/user.resolver';
-import { UserStore } from '~/services/user/user.store';
+import { LoginPage } from './pages/login/login-page.component';
+import { SignupPage } from './pages/signup/signup-page.component';
 
 @NgModule({
    imports: [
       RouterModule.forChild([
-         {
-            path: '', component: DefaultLayoutComponent, children: [
-               { path: 'login', component: LoginFormComponent },
-               { path: 'signup', component: SignupFormComponent },
-               { path: '', component: NavListComponent, resolve: { navs: UserNavsResolver } }
-            ]
-         }
+         { path: 'login', component: LoginPage },
+         { path: 'signup', component: SignupPage },
+         { path: '', component: NavListComponent, resolve: { navs: UserNavsResolver } }
       ]),
       SharedModule, NavListModule
    ],
    exports: [],
    declarations: [
-      LoginFormComponent, SignupFormComponent
+      LoginPage, SignupPage
    ],
    providers: [
       { provide: 'TITLE', useValue: 'Account' }

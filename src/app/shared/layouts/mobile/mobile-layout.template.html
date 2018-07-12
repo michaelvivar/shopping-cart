@@ -1,0 +1,28 @@
+<div [ngClass]="theme">
+   <progress-bar></progress-bar>
+   <router-outlet></router-outlet>
+   <div class="nav-bottom">
+      <mat-grid-list cols="4" rowHeight="50px" class="bg-primary">
+         <mat-grid-tile>
+            <button mat-list-item routerLink="/" routerLinkActive="active">
+               <mat-icon>home</mat-icon>
+            </button>
+         </mat-grid-tile>
+         <mat-grid-tile>
+            <button mat-list-item routerLink="/categories" routerLinkActive="active">
+               <mat-icon>category</mat-icon>
+            </button>
+         </mat-grid-tile>
+         <mat-grid-tile>
+            <button mat-list-item routerLink="/cart" routerLinkActive="active">
+               <mat-icon>shopping_cart</mat-icon>
+            </button>
+         </mat-grid-tile>
+         <mat-grid-tile>
+            <button mat-list-item routerLink="/account" routerLinkActive="active">
+               <mat-icon>account_circle</mat-icon>
+            </button>
+         </mat-grid-tile>
+      </mat-grid-list>
+   </div>
+</div>

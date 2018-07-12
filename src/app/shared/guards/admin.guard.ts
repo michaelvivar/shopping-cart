@@ -13,11 +13,17 @@ export class AdminGuard implements CanActivate {
 
    canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
       return this.user$.pipe(map(user => {
-         return (user && user.type == 'admin') ? true : false;
+         if ((user && user.type == 'admin') || state.url == '/admin/login') {
+            return true;
+         }
       })).pipe(tap(value => {
          if (!value) {
-            this.router.navigate(['/account/login']);
+            this.router.navigate(['/admin/login']);
          }
       }))
+   }
+
+   canActivateChild(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
+      return this.canActivate(next, state);
    }
 }

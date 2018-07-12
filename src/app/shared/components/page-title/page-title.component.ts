@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { Select } from '@ngxs/store';
 import { Observable } from 'rxjs';
 
@@ -7,6 +7,8 @@ import { Observable } from 'rxjs';
    templateUrl: './page-title.component.html'
 })
 export class PageTitleComponent {
+
+   constructor(@Inject('TITLE') public title: string) { }
 
    @Select(store => store.page.title) title$: Observable<string>;
 

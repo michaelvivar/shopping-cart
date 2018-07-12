@@ -1,0 +1,5 @@
+<ng-container *ngIf="(buttons$ | async)?.add; let button">
+   <button type="button" aria-label="Add" mat-icon-button [routerLink]="button.link">
+      <mat-icon aria-label="Back">{{ button.icon }}</mat-icon>
+   </button>
+</ng-container>

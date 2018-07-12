@@ -1,20 +1,18 @@
 import { Component, Inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormControl, Validators, FormBuilder, FormGroup } from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
+import { Form } from '../../utils/form-base.component';
 
 @Component({
    selector: 'signup-form',
    templateUrl: './signup-form.template.html',
 })
-export class SignupFormComponent {
+export class SignupFormComponent extends Form {
 
    constructor(
       @Inject('SIGNUP_SERVICE') private service,
-      private router: Router,
-      private formbuilder: FormBuilder
-   ) { }
-
-   form: FormGroup;
+      private router: Router
+   ) { super() }
 
    ngOnInit() {
       this.form = this.formbuilder.group({

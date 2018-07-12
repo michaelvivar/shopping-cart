@@ -6,4 +6,12 @@ export class CategoryService {
    getAllActive(): Promise<Category[]> {
       return null;
    }
+
+   get(id: any): Promise<Category> {
+      return null;
+   }
+
+   update(category: Category): Promise<void> {
+      return null;
+   }
 }

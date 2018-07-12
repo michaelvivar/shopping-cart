@@ -19,4 +19,16 @@ export class CategoryStore {
          })
       })
    }
+
+   get(id: any) {
+      return this.categories().doc(id).ref.get().then(doc => {
+         const category = doc.data() as Category;
+         category.id = id;
+         return category;
+      })
+   }
+
+   update(category: Category): Promise<void> {
+      return this.categories().doc(category.id).update(category);
+   }
 }

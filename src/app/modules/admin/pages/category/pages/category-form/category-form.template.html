@@ -1,0 +1,14 @@
+<div class="page">
+   <div class="container">
+      <mat-form-field>
+         <input matInput type="text" [formControl]="form.get('name')" placeholder="Name" autocomplete="off" />
+      </mat-form-field>
+      <mat-form-field>
+         <input matInput type="text" [formControl]="form.get('link')" placeholder="Url" autocomplete="off" />
+      </mat-form-field>
+      <mat-form-field>
+         <input matInput type="text" [formControl]="form.get('icon')" placeholder="Icon" autocomplete="off" />
+         <mat-icon matSuffix>{{ form.get('icon').value }}</mat-icon>
+      </mat-form-field>
+   </div>
+</div>

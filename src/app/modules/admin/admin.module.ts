@@ -1,24 +1,29 @@
 import { NgModule } from "@angular/core";
-import { CommonModule } from "@angular/common";
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { RouterModule } from "@angular/router";
-import { SharedModule, DefaultLayoutComponent } from "~/shared";
+import { SharedModule } from "~/shared";
+import { AdminLayout } from "./components/layout/admin-layout.component";
+import { ButtonActionComponent } from "./components/button-action/button-action.component";
+import { LoginPage } from "./pages/login/login-page.component";
 
 @NgModule({
    imports: [
-      CommonModule, FormsModule, ReactiveFormsModule,
       RouterModule.forChild([
          {
-            path: '', component: DefaultLayoutComponent, children: [
-               { path: 'categories', loadChildren: './categories/category.module#CategoryModule' }
+            path: '', component: AdminLayout, children: [
+               { path: 'categories', loadChildren: './pages/category/category.module#CategoryModule' },
+               { path: 'category', loadChildren: './pages/category/category.module#CategoryModule' },
+               { path: 'login', component: LoginPage }
             ]
          }
       ]),
       SharedModule
    ],
-   declarations: [],
+   declarations: [
+      AdminLayout, LoginPage, ButtonActionComponent
+   ],
+   entryComponents: [AdminLayout, LoginPage],
    providers: [
-      { provide: 'TITLE', useValue: 'Admin' },
+      { provide: 'TITLE', useValue: 'Dashboard' },
       { provide: 'THEME', useValue: 'admin-theme' },
       {
          provide: 'SIDENAVS',
@@ -26,8 +31,7 @@ import { SharedModule, DefaultLayoutComponent } from "~/shared";
             { label: 'Products', link: '/admin/products', icon: 'store_mall_directory' },
             { label: 'Categories', link: '/admin/categories', icon: 'category' },
             { label: 'Users', link: '/admin/users', icon: 'group' },
-            { label: 'Website', link: '/', icon: 'public' },
-            { label: 'Account', link: '/account', icon: 'account_circle' }
+            { label: 'Website', link: '/', icon: 'public' }
          ]
       }
    ]

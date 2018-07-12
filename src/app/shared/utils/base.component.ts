@@ -1,7 +1,7 @@
 import { MatDialog } from '@angular/material';
 import { Subscription } from "rxjs";
 import { Store } from '@ngxs/store';
-import { PageTitle } from '~/store/actions/page.actions';
+import { PageTitle, ResetButtons } from '~/store/actions/page.actions';
 import { ServiceLocator } from './service-locator';
 import { safeHtml } from './html-helper';
 import { AlertDialog } from '../components/alert-dialog/alert-dialog.component';
@@ -17,12 +17,15 @@ export abstract class BaseComponent {
    protected dialog: MatDialog;
    protected location: Location;
    private subscriptions: Subscription[] = [];
+   asPage = false;
 
    set subscription(value: Subscription) {
       this.subscriptions.push(value);
    }
 
    ngOnDestroy() {
+      this.store.dispatch(new PageTitle(null));
+      this.store.dispatch(new ResetButtons());
       this.subscriptions.forEach(o => o.unsubscribe());
       console.log('Destroyed!', this.subscriptions.length);
    }
@@ -56,8 +59,8 @@ export abstract class Page extends BaseComponent {
       this.store.dispatch(new PageTitle(value));
    }
 
-   ngOnDestroy() {
-      this.store.dispatch(new PageTitle(null));
-      super.ngOnDestroy();
+   constructor() {
+      super();
+      this.asPage = true;
    }
 }

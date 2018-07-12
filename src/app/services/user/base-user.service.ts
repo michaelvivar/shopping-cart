@@ -14,14 +14,7 @@ export abstract class BaseUserService {
             ]
          }
          else {
-            return [
-               { link: '/account/orders', icon: 'local_shipping', label: 'Orders' },
-               { link: '/account/cancelations', icon: 'cancel', label: 'Cancelations' },
-               { link: '/account/reviews', icon: 'star', label: 'Reviews' },
-               { link: '/account/wishlist', icon: 'list', label: 'Wishlist' },
-               { link: '/account/addresses', icon: 'location_on', label: 'Address Book' },
-               { link: '/account/settings', icon: 'settings', label: 'Settings' }
-            ]
+
          }
       }
       return [];

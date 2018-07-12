@@ -4,7 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ServiceLocator } from './utils/service-locator';
 import { PageTitleComponent } from './components/page-title/page-title.component';
-import { DefaultLayoutComponent } from './layouts/default/default-layout.component';
+import { DefaultLayout } from './layouts/default/default-layout.component';
 import { SortPipe } from './pipes/sort.pipe';
 import { JoinPipe } from './pipes/join.pipe';
 import { StatusPipe } from './pipes/status.pipe';
@@ -19,9 +19,16 @@ import { VisibleDirective } from './directives/visible.directive';
 import { MobileClassDirective } from './directives/mobile-class.directive';
 import { materials } from './ng-materials';
 import { EllipsisPipe } from './pipes/ellipsis.pipe';
+import { MobileLayout } from './layouts/mobile/mobile-layout.component';
+import { ProgressBarComponent } from './components/progress-bar/progress-bar.component';
+import { BackButtonComponent } from './components/back-button/back-button.component';
+import { LoginFormComponent } from './components/login-form/login-form.component';
+import { SignupFormComponent } from './components/signup-form/signup-form.component';
 
 const pipes = [SortPipe, JoinPipe, StatusPipe, EllipsisPipe];
-const directives = [LogoutDirective, ButtonMediumDirective, VisibleDirective, MobileClassDirective];
+const directives = [
+   LogoutDirective, ButtonMediumDirective, VisibleDirective, MobileClassDirective
+];
 
 @NgModule({
    imports: [
@@ -29,19 +36,22 @@ const directives = [LogoutDirective, ButtonMediumDirective, VisibleDirective, Mo
       ...materials
    ],
    declarations: [
-      PageTitleComponent, DefaultLayoutComponent,
-      AlertDialog, ConfirmDialog,
+      PageTitleComponent, DefaultLayout, MobileLayout,
+      AlertDialog, ConfirmDialog, ProgressBarComponent,
+      BackButtonComponent, LoginFormComponent, SignupFormComponent,
       ...directives,
       ...pipes
    ],
-   entryComponents: [AlertDialog, ConfirmDialog],
    exports: [
       CommonModule, FormsModule, ReactiveFormsModule,
-      PageTitleComponent, DefaultLayoutComponent,
+      PageTitleComponent, DefaultLayout, MobileLayout,
+      ProgressBarComponent, BackButtonComponent, LoginFormComponent,
+      SignupFormComponent,
       ...materials,
       ...directives,
       ...pipes
    ],
+   entryComponents: [AlertDialog, ConfirmDialog],
    providers: [ModulePreloadingStrategy, AuthGuard, AdminGuard]
 })
 export class SharedModule {
