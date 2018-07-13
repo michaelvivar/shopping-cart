@@ -4,7 +4,8 @@ import { Observable } from 'rxjs';
 
 @Component({
    selector: 'back-button',
-   templateUrl: './back-button.template.html'
+   templateUrl: './back-button.template.html',
+   styles: ['button { margin-right: 10px }']
 })
 export class BackButtonComponent {
 

@@ -1,4 +1,14 @@
 <div [ngClass]="theme">
+   <mat-toolbar color="primary">
+      <div class="container flex">
+         <back-button></back-button>
+         <span page-title></span>
+         <span class="flex-spacer"></span>
+         <button mat-list-item class="text-white">
+            <mat-icon>search</mat-icon>
+         </button>
+      </div>
+   </mat-toolbar>
    <progress-bar></progress-bar>
    <router-outlet></router-outlet>
    <div class="nav-bottom">

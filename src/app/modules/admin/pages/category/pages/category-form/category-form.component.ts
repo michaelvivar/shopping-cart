@@ -11,12 +11,11 @@ import { Category } from '~/services/models/category.model';
 })
 export class CategoryFormComponent extends Form {
 
-   constructor(private route: ActivatedRoute) { super() }
+   constructor(private route: ActivatedRoute) { super(true) }
 
    category: Category;
 
    ngOnInit() {
-      this.asPage = true;
       this.formControls();
       this.category = this.route.snapshot.data['category'];
       if (this.category) {

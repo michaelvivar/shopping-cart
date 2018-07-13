@@ -3,7 +3,6 @@ import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ServiceLocator } from './utils/service-locator';
-import { PageTitleComponent } from './components/page-title/page-title.component';
 import { DefaultLayout } from './layouts/default/default-layout.component';
 import { SortPipe } from './pipes/sort.pipe';
 import { JoinPipe } from './pipes/join.pipe';
@@ -24,10 +23,12 @@ import { ProgressBarComponent } from './components/progress-bar/progress-bar.com
 import { BackButtonComponent } from './components/back-button/back-button.component';
 import { LoginFormComponent } from './components/login-form/login-form.component';
 import { SignupFormComponent } from './components/signup-form/signup-form.component';
+import { PageTitleDirective } from './directives/page-title.directive';
 
 const pipes = [SortPipe, JoinPipe, StatusPipe, EllipsisPipe];
 const directives = [
-   LogoutDirective, ButtonMediumDirective, VisibleDirective, MobileClassDirective
+   LogoutDirective, ButtonMediumDirective, VisibleDirective, MobileClassDirective,
+   PageTitleDirective
 ];
 
 @NgModule({
@@ -36,7 +37,7 @@ const directives = [
       ...materials
    ],
    declarations: [
-      PageTitleComponent, DefaultLayout, MobileLayout,
+      DefaultLayout, MobileLayout,
       AlertDialog, ConfirmDialog, ProgressBarComponent,
       BackButtonComponent, LoginFormComponent, SignupFormComponent,
       ...directives,
@@ -44,7 +45,7 @@ const directives = [
    ],
    exports: [
       CommonModule, FormsModule, ReactiveFormsModule,
-      PageTitleComponent, DefaultLayout, MobileLayout,
+      DefaultLayout, MobileLayout,
       ProgressBarComponent, BackButtonComponent, LoginFormComponent,
       SignupFormComponent,
       ...materials,

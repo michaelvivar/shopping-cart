@@ -8,7 +8,7 @@ import { AlertDialog } from '../components/alert-dialog/alert-dialog.component';
 import { ConfirmDialog } from '../components/confirm-dialog/confirm-dialog.component';
 
 export abstract class BaseComponent {
-   constructor() {
+   constructor(private _asPage = false) {
       this.store = ServiceLocator.injector.get(Store);
       this.dialog = ServiceLocator.injector.get(MatDialog);
       //this.location = ServiceLocator.injector.get(Location);
@@ -17,15 +17,16 @@ export abstract class BaseComponent {
    protected dialog: MatDialog;
    protected location: Location;
    private subscriptions: Subscription[] = [];
-   asPage = false;
 
    set subscription(value: Subscription) {
       this.subscriptions.push(value);
    }
 
    ngOnDestroy() {
-      this.store.dispatch(new PageTitle(null));
-      this.store.dispatch(new ResetButtons());
+      if (this._asPage) {
+         this.store.dispatch(new PageTitle(null));
+         this.store.dispatch(new ResetButtons());
+      }
       this.subscriptions.forEach(o => o.unsubscribe());
       console.log('Destroyed!', this.subscriptions.length);
    }
@@ -60,7 +61,6 @@ export abstract class Page extends BaseComponent {
    }
 
    constructor() {
-      super();
-      this.asPage = true;
+      super(true);
    }
 }

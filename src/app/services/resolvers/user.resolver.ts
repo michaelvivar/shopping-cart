@@ -13,7 +13,8 @@ export class UserNavsResolver implements Resolve<any[]> {
          { link: '/account/reviews', icon: 'star', label: 'Reviews' },
          { link: '/account/wishlist', icon: 'list', label: 'Wishlist' },
          { link: '/account/addresses', icon: 'location_on', label: 'Address Book' },
-         { link: '/account/settings', icon: 'settings', label: 'Settings' }
+         { link: '/account/settings', icon: 'settings', label: 'Settings' },
+         { link: '/account/logout', icon: 'subdirectory_arrow_left', label: 'Log Out' }
       ]
    }
 }

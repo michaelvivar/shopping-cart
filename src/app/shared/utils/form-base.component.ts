@@ -3,8 +3,8 @@ import { BaseComponent } from './base.component';
 import { ServiceLocator } from './service-locator';
 
 export class Form extends BaseComponent {
-   constructor() {
-      super();
+   constructor(asPage = false) {
+      super(asPage);
       this.formbuilder = ServiceLocator.injector.get(FormBuilder);
    }
 

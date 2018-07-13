@@ -4,6 +4,10 @@ import { MatTableDataSource, MatPaginator } from "@angular/material";
 
 export abstract class Table extends BaseComponent {
 
+   constructor(asPage = false) {
+      super(asPage);
+   }
+
    protected dataSource: MatTableDataSource<any>;
    abstract columns: string[];
    @ViewChild(MatPaginator) paginator: MatPaginator;

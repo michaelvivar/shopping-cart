@@ -22,6 +22,9 @@ import { Select } from '@ngxs/store';
        width: 30px;
        margin: 0 10px;
     }
+    .page-title {
+      padding: 0 15px;
+   }
   `],
    providers: [RouterService]
 })

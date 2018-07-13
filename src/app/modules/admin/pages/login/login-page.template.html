@@ -1,0 +1,14 @@
+<div class="page">
+   <div class="container form-theme">
+      <mat-form-field>
+         <input type="text" matInput placeholder="Username" [formControl]="form.controls['username']" autocomplete="off" />
+      </mat-form-field>
+      <mat-form-field>
+         <input type="password" matInput placeholder="Password" [formControl]="form.controls['password']" />
+      </mat-form-field>
+      <div class="text-center">
+         <button mobile-class="btn-block" mat-raised-button color="accent" (click)="submit()" [disabled]="form.invalid || form.untouched || submitted">Log In</button>
+         <a mobile-class="btn-block padding-top-20" mat-button routerLink="/account/signup" [disabled]="form.valid">Sign Up</a>
+      </div>
+   </div>
+</div>

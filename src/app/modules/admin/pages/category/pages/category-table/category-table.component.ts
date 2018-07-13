@@ -17,12 +17,11 @@ export class CategoryTableComponent extends Table {
    constructor(
       private route: ActivatedRoute,
       private service: CategoryService
-   ) { super() }
+   ) { super(true) }
 
    columns: string[] = ['action', 'name', 'status'];
 
    ngOnInit() {
-      this.asPage = true;
       const categories = this.route.snapshot.data['categories'] as Category[];
       if (categories) {
          this.data = categories.sort(sortBy('-status', 'name'))

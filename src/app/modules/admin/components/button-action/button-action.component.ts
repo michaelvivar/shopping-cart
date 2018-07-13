@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 @Component({
    selector: 'button-action',
    templateUrl: './button-action.template.html',
-   styles: ['button { margin-right: 20px']
+   styles: ['button { margin-right: 0px']
 })
 export class ButtonActionComponent {
 
