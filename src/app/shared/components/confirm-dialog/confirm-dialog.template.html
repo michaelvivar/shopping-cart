@@ -1,11 +1,16 @@
-<h2 mat-dialog-title *ngIf="data.title">{{ data.title }}</h2>
-<mat-dialog-content>
-   <p [innerHTML]="data.message"></p>
-</mat-dialog-content>
-<mat-dialog-actions>
-   <span class="flex-spacer"></span>
-   <div class="blue">
-      <button [mat-dialog-close]="false" mat-raised-button color="primary">Cancel</button>
-      <button [mat-dialog-close]="true" mat-raised-button color="primary">Confirm</button>
+<div class="form-theme">
+   <h2 mat-dialog-title *ngIf="data?.dialog?.title">{{ data.dialog.title }}</h2>
+   <mat-dialog-content>
+      <p [innerHTML]="data.message"></p>
+   </mat-dialog-content>
+   <div class="br">
+      <mat-divider></mat-divider>
    </div>
-</mat-dialog-actions>
+   <mat-dialog-actions>
+      <span class="flex-spacer"></span>
+      <div>
+         <button [mat-dialog-close]="false" mat-raised-button>{{ data.dialog.cancel }}</button>
+         <button [mat-dialog-close]="true" mat-raised-button color="warn">{{ data.dialog.confirm }}</button>
+      </div>
+   </mat-dialog-actions>
+</div>

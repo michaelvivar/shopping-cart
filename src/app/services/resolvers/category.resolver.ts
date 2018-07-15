@@ -7,8 +7,9 @@ import { Category } from "~/services/models/category.model";
 export class CategoriesResolver {
    constructor(private service: CategoryService) { }
 
-   resolve() {
-      return this.service.getAllActive();
+   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+      const filterActive = route.data['filterActive'];
+      return this.service.allAsync((filterActive == true) ? true : false);
    }
 }
 

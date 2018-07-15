@@ -1,4 +1,4 @@
-<div class="page">
+<div class="page form-theme">
    <div class="container">
       <mat-form-field>
          <input matInput type="text" [formControl]="form.get('name')" placeholder="Name" autocomplete="off" />
@@ -10,5 +10,8 @@
          <input matInput type="text" [formControl]="form.get('icon')" placeholder="Icon" autocomplete="off" />
          <mat-icon matSuffix>{{ form.get('icon').value }}</mat-icon>
       </mat-form-field>
+      <div class="text-center">
+         <button mat-raised-button color="accent" (click)="save()" [disabled]="form.invalid || form.untouched || submitted">{{ submitted ? 'Please wait...' : 'Save' }}</button>
+      </div>
    </div>
 </div>

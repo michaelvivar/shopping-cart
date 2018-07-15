@@ -16,4 +16,3 @@ export * from './guards/auth.guard';
 
 export * from './components/alert-dialog/alert-dialog.component';
 export * from './components/confirm-dialog/confirm-dialog.component';
-export * from './components/page-title/page-title.component';

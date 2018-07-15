@@ -3,7 +3,7 @@ import { Category } from "~/services/models/category.model";
 
 @Injectable()
 export class CategoryService {
-   getAllActive(): Promise<Category[]> {
+   allAsync(filterActive = true): Promise<Category[]> {
       return null;
    }
 
@@ -11,7 +11,11 @@ export class CategoryService {
       return null;
    }
 
-   update(category: Category): Promise<void> {
+   insert(category: Category): Promise<string> {
+      return null;
+   }
+
+   update(id: any, category: Category | { status: boolean }): Promise<void> {
       return null;
    }
 }

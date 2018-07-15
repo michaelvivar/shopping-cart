@@ -26,5 +26,5 @@ export class FileInputComponent extends FileInputControlValueAccessor {
 
    @Input('multiple') multiple: boolean = false;
    @Input('color') color: string = 'primary';
-   @Output('change') onChange = new EventEmitter();
+   @Output('select') onChange = new EventEmitter();
 }

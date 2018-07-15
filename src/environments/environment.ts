@@ -9,7 +9,7 @@ export const environment = {
       authDomain: "shopping-cart-db.firebaseapp.com",
       databaseURL: "https://shopping-cart-db.firebaseio.com",
       projectId: "shopping-cart-db",
-      storageBucket: "",
+      storageBucket: "shopping-cart-db.appspot.com",
       messagingSenderId: "451012300747"
    }
 };

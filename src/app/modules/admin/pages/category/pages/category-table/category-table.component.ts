@@ -6,13 +6,9 @@ import { Category } from '~/services/models/category.model';
 import { CategoryService } from '~/services/category/category.service';
 
 @Component({
-   templateUrl: './category-table.template.html',
-   styles: [
-      '.mat-menu-panel { min-width: 130px }',
-      'td.mat-cell:first-child { padding-left: 5px !important }'
-   ]
+   templateUrl: './category-table.template.html'
 })
-export class CategoryTableComponent extends Table {
+export class CategoryTablePage extends Table {
 
    constructor(
       private route: ActivatedRoute,
@@ -30,9 +26,9 @@ export class CategoryTableComponent extends Table {
       this.store.dispatch(new AddButton({ link: '/admin/category/add' }));
    }
 
-   changeStatus(category: Category) {
+   toggleStatus(category: Category) {
       category.status = !category.status;
-      this.service.update(category).then(_ => {
+      this.service.update(category.id, { status: category.status }).then(_ => {
          this.data = this.dataSource.data.sort(sortBy('-status', 'name'));
       });
    }

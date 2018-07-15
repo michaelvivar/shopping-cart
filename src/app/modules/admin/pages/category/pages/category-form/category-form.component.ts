@@ -1,17 +1,22 @@
 import { Component } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Form } from '~/shared';
 import { PageTitle, BackButton } from '~/store/actions/page.actions';
 import { Category } from '~/services/models/category.model';
+import { CategoryService } from '~/services/category/category.service';
 
 
 @Component({
    templateUrl: './category-form.template.html'
 })
-export class CategoryFormComponent extends Form {
+export class CategoryFormPage extends Form {
 
-   constructor(private route: ActivatedRoute) { super(true) }
+   constructor(
+      private route: ActivatedRoute,
+      private router: Router,
+      private service: CategoryService
+   ) { super(true) }
 
    category: Category;
 
@@ -30,7 +35,7 @@ export class CategoryFormComponent extends Form {
       this.store.dispatch(new BackButton({ link: '/admin/categories' }));
    }
 
-   formControls() {
+   private formControls() {
       this.form = this.formbuilder.group({
          name: new FormControl(),
          icon: new FormControl(),
@@ -40,5 +45,35 @@ export class CategoryFormComponent extends Form {
          const trim = value.replace(' ', '-').toLowerCase();
          this.form.get('link').setValue(`/category/${trim}`);
       })
+   }
+
+   save() {
+      this.submitted = true;
+      if (this.category) {
+         this.update();
+      }
+      else {
+         this.insert();
+      }
+      this.form.markAsUntouched();
+   }
+
+   private insert() {
+      this.form.addControl('status', new FormControl(false));
+      this.service.insert(this.form.value).then(id => {
+         this.saved();
+      })
+   }
+
+   private update() {
+      this.service.update(this.category.id, this.form.value).then(_ => {
+         this.saved();
+      })
+   }
+
+   private saved() {
+      this.submitted = false;
+      this.openSnackBar('Saved', 'Close');
+      this.store.dispatch(new PageTitle('Edit: ' + this.form.get('name').value));
    }
 }

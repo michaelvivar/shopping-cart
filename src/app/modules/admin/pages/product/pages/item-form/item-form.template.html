@@ -1,0 +1,28 @@
+<div class="page form-theme">
+   <div class="container">
+      <mat-form-field>
+         <input matInput input-currency type="text" [formControl]="form.get('price')" placeholder="Price" autocomplete="off" />
+      </mat-form-field>
+      <mat-form-field>
+         <input matInput type="text" [formControl]="form.get('color')" [matAutocomplete]="color" placeholder="Color" autocomplete="off"
+         />
+         <mat-autocomplete #color="matAutocomplete">
+            <mat-option *ngFor="let color of colors$ | async" [value]="color.value">
+               {{ color.text }}
+            </mat-option>
+         </mat-autocomplete>
+      </mat-form-field>
+      <mat-form-field>
+         <input matInput type="text" [formControl]="form.get('size')" [matAutocomplete]="size" placeholder="Size" autocomplete="off"
+         />
+         <mat-autocomplete #size="matAutocomplete">
+            <mat-option *ngFor="let size of sizes$ | async" [value]="size.value">
+               {{ size.text }}
+            </mat-option>
+         </mat-autocomplete>
+      </mat-form-field>
+      <div class="text-center">
+         <button mat-raised-button color="accent" (click)="save()" [disabled]="form.invalid || form.untouched || submitted">{{ submitted ? 'Please wait...' : 'Save' }}</button>
+      </div>
+   </div>
+</div>

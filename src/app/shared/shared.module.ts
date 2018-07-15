@@ -24,11 +24,13 @@ import { BackButtonComponent } from './components/back-button/back-button.compon
 import { LoginFormComponent } from './components/login-form/login-form.component';
 import { SignupFormComponent } from './components/signup-form/signup-form.component';
 import { PageTitleDirective } from './directives/page-title.directive';
+import { InputCurrencyDirective } from './directives/input-currency.directive';
+import { ImageFitDirective } from './directives/image-fit.directive';
 
 const pipes = [SortPipe, JoinPipe, StatusPipe, EllipsisPipe];
 const directives = [
    LogoutDirective, ButtonMediumDirective, VisibleDirective, MobileClassDirective,
-   PageTitleDirective
+   PageTitleDirective, InputCurrencyDirective, ImageFitDirective
 ];
 
 @NgModule({

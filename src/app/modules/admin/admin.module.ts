@@ -12,6 +12,9 @@ import { LoginPage } from "./pages/login/login-page.component";
             path: '', component: AdminLayout, children: [
                { path: 'categories', loadChildren: './pages/category/category.module#CategoryModule' },
                { path: 'category', loadChildren: './pages/category/category.module#CategoryModule' },
+               { path: 'products', loadChildren: './pages/product/product.module#ProductModule' },
+               { path: 'product', loadChildren: './pages/product/product.module#ProductModule' },
+               { path: 'settings', loadChildren: './pages/settings/settings.module#SettingsModule' },
                { path: 'login', component: LoginPage }
             ]
          }
@@ -31,6 +34,7 @@ import { LoginPage } from "./pages/login/login-page.component";
             { label: 'Products', link: '/admin/products', icon: 'store_mall_directory' },
             { label: 'Categories', link: '/admin/categories', icon: 'category' },
             { label: 'Users', link: '/admin/users', icon: 'group' },
+            { label: 'Settings', link: '/admin/settings', icon: 'settings' },
             { label: 'Website', link: '/', icon: 'public' }
          ]
       }

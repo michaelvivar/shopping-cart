@@ -14,7 +14,8 @@ import { ContentDirective } from './components/content/content.directive';
       RouterModule.forChild([
          {
             path: '', component: ContentComponent, children: [
-               { path: 'account', loadChildren: './../account/account.module#AccountModule', canActivate: [AuthGuard], canActivateChild: [AuthGuard] },
+               // { path: 'account', loadChildren: './../account/account.module#AccountModule', canActivate: [AuthGuard], canActivateChild: [AuthGuard] },
+               { path: 'account', loadChildren: './../account/account.module#AccountModule' },
                { path: 'categories', component: CategoriesPage, resolve: { categories: CategoriesResolver } },
                { path: 'cart', component: CartPage },
                { path: '', component: HomePage }

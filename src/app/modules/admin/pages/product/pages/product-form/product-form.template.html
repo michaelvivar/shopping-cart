@@ -1,0 +1,18 @@
+<div class="page form-theme">
+   <div class="container">
+      <mat-form-field>
+         <input matInput type="text" [formControl]="form.get('name')" placeholder="Name" autocomplete="off" />
+      </mat-form-field>
+      <mat-form-field>
+         <mat-select [formControl]="form.get('category')" placeholder="Category">
+            <mat-option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</mat-option>
+         </mat-select>
+      </mat-form-field>
+      <mat-form-field>
+         <textarea matInput [formControl]="form.get('details')" placeholder="Details"></textarea>
+      </mat-form-field>
+      <div class="text-center">
+         <button mat-raised-button color="accent" (click)="save()" [disabled]="form.invalid || form.untouched || submitted">{{ submitted ? 'Please wait...' : 'Save' }}</button>
+      </div>
+   </div>
+</div>

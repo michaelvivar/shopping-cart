@@ -1,4 +1,4 @@
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatSnackBar } from '@angular/material';
 import { Subscription } from "rxjs";
 import { Store } from '@ngxs/store';
 import { PageTitle, ResetButtons } from '~/store/actions/page.actions';
@@ -11,10 +11,12 @@ export abstract class BaseComponent {
    constructor(private _asPage = false) {
       this.store = ServiceLocator.injector.get(Store);
       this.dialog = ServiceLocator.injector.get(MatDialog);
+      this.snackBar = ServiceLocator.injector.get(MatSnackBar);
       //this.location = ServiceLocator.injector.get(Location);
    }
    protected store: Store;
    protected dialog: MatDialog;
+   private snackBar: MatSnackBar;
    protected location: Location;
    private subscriptions: Subscription[] = [];
 
@@ -31,26 +33,36 @@ export abstract class BaseComponent {
       console.log('Destroyed!', this.subscriptions.length);
    }
 
-   alert(message: string, title?: string) {
+   alert(message: string, dialog?: { title?: string, ok?: string, width?: number }) {
       message = <any>safeHtml(message);
+      dialog = dialog || {};
+      dialog.width = dialog.width || 400;
       if (this.dialog) {
          let dialogRef = this.dialog.open(AlertDialog, {
-            width: '300px',
-            data: { message, title }
+            width: dialog.width + 'px',
+            data: { message, dialog }
          });
          return dialogRef.afterClosed().toPromise();
       }
    }
 
-   confirm(message: string, title?: string): Promise<boolean> {
+   confirm(message: string, dialog?: { title?: string, cancel?: string, confirm?: string, width?: number }): Promise<boolean> {
       message = <any>safeHtml(message);
+      dialog = dialog || {};
+      dialog.width = dialog.width || 400;
       if (this.dialog) {
          let dialogRef = this.dialog.open(ConfirmDialog, {
-            width: '400px',
-            data: { message, title }
+            width: dialog.width + 'px',
+            data: { message, dialog }
          });
          return dialogRef.afterClosed().toPromise();
       }
+   }
+
+   openSnackBar(message: string, action: string) {
+      this.snackBar.open(message, action, {
+         duration: 2000,
+      });
    }
 }
 

@@ -13,7 +13,9 @@ import { SharedModule, AuthGuard, AdminGuard, ModulePreloadingStrategy } from '~
 import { RouterModule } from '@angular/router';
 import { AppState } from '~/store/states/app.state';
 import { AngularFireModule } from 'angularfire2';
+import { AngularFireAuthModule } from "angularfire2/auth";
 import { AngularFirestoreModule } from 'angularfire2/firestore';
+import { AngularFireStorageModule } from "angularfire2/storage";
 import { environment } from '~/environments/environment';
 import { ServiceModule } from '~/services/service.module';
 import { TestElementComponent } from './elements/test-element.component';
@@ -23,11 +25,14 @@ import { createCustomElement } from '@angular/elements';
    imports: [
       BrowserModule, BrowserAnimationsModule,
       RouterModule.forRoot([
-         { path: 'admin', loadChildren: './modules/admin/admin.module#AdminModule', canActivate: [AdminGuard], canActivateChild: [AdminGuard], data: { preload: false } },
+         // { path: 'admin', loadChildren: './modules/admin/admin.module#AdminModule', canActivate: [AdminGuard], canActivateChild: [AdminGuard], data: { preload: false } },
+         { path: 'admin', loadChildren: './modules/admin/admin.module#AdminModule', data: { preload: false } },
          { path: '', loadChildren: './modules/main/main.module#MainModule' }
       ], { preloadingStrategy: ModulePreloadingStrategy }),
       AngularFireModule.initializeApp(environment.firebase),
       AngularFirestoreModule,
+      AngularFireAuthModule,
+      AngularFireStorageModule,
       NgxsModule.forRoot([AppState, PageState]),
       NgxsLoggerPluginModule.forRoot(),
       NgxsReduxDevtoolsPluginModule.forRoot(),

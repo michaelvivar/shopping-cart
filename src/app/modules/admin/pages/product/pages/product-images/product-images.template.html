@@ -1,0 +1,33 @@
+<div class="page form-theme">
+   <div class="container">
+      <file-input color="accent" (select)="upload($event)" multiple="true">Upload Image</file-input>
+
+      <mat-list role="list" *ngFor="let image of images">
+         <mat-list-item role="listitem">{{ image.name }}</mat-list-item>
+         <mat-progress-bar color="accent" mode="determinate" [value]="image.state"></mat-progress-bar>
+      </mat-list>
+
+      <div class="br">
+         <mat-divider></mat-divider>
+      </div>
+
+      <!-- <div class="row">
+         <ng-container *ngFor="let photo of photos$ | async">
+            <div class="col-md-3 padding-top-20 img-container">
+               <img [src]="photo.url" class="img-thumbnail img-fluid rounded" />
+            </div>
+         </ng-container>
+      </div> -->
+
+      <mat-grid-list cols="4" rowHeight="1:1" gutterSize="20">
+         <ng-container *ngFor="let photo of photos$ | async">
+            <mat-grid-tile>
+               <img [src]="photo.url" image-fit class="mat-elevation-z2" />
+               <button btn-md mat-fab class="delete-button" color="warn" (click)="confirmDelete(photo)">
+                  <mat-icon aria-label="Delete Image">delete</mat-icon>
+               </button>
+            </mat-grid-tile>
+         </ng-container>
+      </mat-grid-list>
+   </div>
+</div>
