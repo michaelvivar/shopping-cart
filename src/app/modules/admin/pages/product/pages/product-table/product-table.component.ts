@@ -25,8 +25,8 @@ export class ProductTablePage extends Table {
    }
 
    toggleStatus(product: Product) {
-      product.status = !product.status;
-      this.service.update(product.id, { status: product.status }).then(_ => {
+      const status = !product.status;
+      this.service.update(product.id, { status }).then(_ => {
          this.data = this.dataSource.data.sort(sortBy('-status', 'name'));
       });
    }

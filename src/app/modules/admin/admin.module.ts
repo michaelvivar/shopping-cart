@@ -15,6 +15,7 @@ import { LoginPage } from "./pages/login/login-page.component";
                { path: 'products', loadChildren: './pages/product/product.module#ProductModule' },
                { path: 'product', loadChildren: './pages/product/product.module#ProductModule' },
                { path: 'settings', loadChildren: './pages/settings/settings.module#SettingsModule' },
+               { path: 'users', loadChildren: './pages/user/user.module#UserModule' },
                { path: 'login', component: LoginPage }
             ]
          }

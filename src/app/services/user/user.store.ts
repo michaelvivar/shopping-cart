@@ -3,13 +3,28 @@ import { Store, Select } from '@ngxs/store';
 import { AppUser } from '~/store/actions/app.actions';
 import { Observable } from 'rxjs';
 import { BaseUserService } from '~/services/user/base-user.service';
+import { User } from '~/services/models/user.model';
+import { AngularFirestore, CollectionReference, Query } from 'angularfire2/firestore';
 
 @Injectable()
 export class UserStore extends BaseUserService {
 
    @Select(store => store.app.user) user$: Observable<any>;
 
-   constructor(private store: Store) { super() }
+   constructor(
+      private store: Store,
+      private firestore: AngularFirestore
+   ) { super() }
+
+   private users(fn?: (ref: CollectionReference) => Query) {
+      return this.firestore.collection('users', fn);
+   }
+
+   private map(doc: firebase.firestore.QueryDocumentSnapshot) {
+      const user = doc.data() as User;
+      user.id = doc.id;
+      return user;
+   }
 
    get(id: any) {
       return { id, service: 'Store' };
@@ -25,5 +40,27 @@ export class UserStore extends BaseUserService {
          return resolve(true);
       })
       return promise;
+   }
+
+   allAsync(filterActive = true): Promise<User[]> {
+      const ref = this.users().ref;
+      if (filterActive) {
+         return ref.where('status', '==', true).get().then(data => {
+            return data.docs.map(doc => this.map(doc));
+         });
+      }
+      else {
+         return ref.get().then(data => {
+            return data.docs.map(doc => this.map(doc));
+         });
+      }
+   }
+
+   insert(user: User): Promise<any> {
+      return this.users().add(user).then(ref => ref.id);
+   }
+
+   update(id: any, user: User | { status: boolean }): Promise<void> {
+      return this.users().doc(id).update(user);
    }
 }

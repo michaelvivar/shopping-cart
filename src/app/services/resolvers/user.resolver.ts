@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { UserService } from "~/services/user/user.service";
-import { Resolve } from "@angular/router";
+import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from "@angular/router";
 
 @Injectable({ providedIn: 'root' })
 export class UserNavsResolver implements Resolve<any[]> {
@@ -16,5 +16,15 @@ export class UserNavsResolver implements Resolve<any[]> {
          { link: '/account/settings', icon: 'settings', label: 'Settings' },
          { link: '/account/logout', icon: 'subdirectory_arrow_left', label: 'Log Out' }
       ]
+   }
+}
+
+@Injectable({ providedIn: 'root' })
+export class UsersResolver {
+   constructor(private service: UserService) { }
+
+   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+      const filterActive = route.data['filterActive'];
+      return this.service.allAsync((filterActive == true) ? true : false);
    }
 }
