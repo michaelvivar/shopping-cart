@@ -26,6 +26,7 @@ import { SignupFormComponent } from './components/signup-form/signup-form.compon
 import { PageTitleDirective } from './directives/page-title.directive';
 import { InputCurrencyDirective } from './directives/input-currency.directive';
 import { ImageFitDirective } from './directives/image-fit.directive';
+import { PageNotFound } from './pages/page-not-found.component';
 
 const pipes = [SortPipe, JoinPipe, StatusPipe, EllipsisPipe];
 const directives = [
@@ -42,6 +43,7 @@ const directives = [
       DefaultLayout, MobileLayout,
       AlertDialog, ConfirmDialog, ProgressBarComponent,
       BackButtonComponent, LoginFormComponent, SignupFormComponent,
+      PageNotFound,
       ...directives,
       ...pipes
    ],

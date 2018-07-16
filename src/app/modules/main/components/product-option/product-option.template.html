@@ -1,0 +1,19 @@
+<ng-container *ngIf="items && items.length > 0">
+   <div>Product options:</div>
+   <mat-nav-list>
+      <ng-container *ngFor="let item of items">
+         <a mat-list-item [routerLink]="['/product', id,item.id]">
+            <div class="row no-gutters" style="width: 100%">
+               <div class="col-2">
+                  <img [src]="item.pictures[0].url" height="30" />
+               </div>
+               <div class="col-10 flex">
+                  <span>{{ item.color }} {{ item.size }}</span>
+                  <span class="flex-spacer"></span>
+                  <span>{{ item.price | currency:'Php ' }}</span>
+               </div>
+            </div>
+         </a>
+      </ng-container>
+   </mat-nav-list>
+</ng-container>

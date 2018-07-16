@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { Router, NavigationStart, NavigationEnd, NavigationCancel, NavigationError, Event } from '@angular/router';
 import { Store } from '@ngxs/store';
+import { CategoryService } from '~/services/category/category.service';
+import { CategoriesData } from '~/store/actions/data.actions';
 
 @Component({
    selector: 'app-root',
@@ -9,7 +11,7 @@ import { Store } from '@ngxs/store';
 })
 export class AppComponent {
 
-   constructor(router: Router, store: Store) {
+   constructor(router: Router, private store: Store, private categoryService: CategoryService) {
 
       router.events.subscribe((event: Event) => {
          if (event instanceof NavigationStart) {
@@ -25,6 +27,12 @@ export class AppComponent {
             router.navigate(['error']);
          }
       })
+   }
+
+   ngOnInit() {
+      this.categoryService.all().subscribe(data => {
+         this.store.dispatch(new CategoriesData(data));
+      });
    }
 
    progress: number = 0;

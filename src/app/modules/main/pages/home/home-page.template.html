@@ -1,9 +1,7 @@
-<div class="row no-gutters">
-   <div class="col-3">
-
-   </div>
-   <div class="col-6 blue">
-      <button mat-raised-button color="primary" btn-md (click)="open()">Ok</button>
-   </div>
-   <div class="col-3"></div>
+<div class="row">
+   <ng-container *ngFor="let product of products$ | async">
+      <div class="col-md-3" mobile-class="col-6">
+         <product [data]="product"></product>
+      </div>
+   </ng-container>
 </div>

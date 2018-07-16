@@ -1,0 +1,7 @@
+<mat-nav-list>
+   <ng-container *ngFor="let nav of navs">
+      <a mat-list-item [routerLink]="nav.link">
+         <mat-icon color="primary">{{ nav.icon }}</mat-icon> {{ nav.label ? nav.label : nav.name }}</a>
+      <mat-divider></mat-divider>
+   </ng-container>
+</mat-nav-list>

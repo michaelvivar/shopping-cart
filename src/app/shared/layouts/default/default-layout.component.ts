@@ -25,6 +25,9 @@ import { Select } from '@ngxs/store';
     .page-title {
       padding: 0 15px;
    }
+   .main-outlet {
+      padding: 20px;
+   }
   `],
    providers: [RouterService]
 })

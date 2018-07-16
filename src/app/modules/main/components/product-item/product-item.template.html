@@ -1,0 +1,11 @@
+<ng-container *ngIf="item">
+   <mat-grid-list cols="1" rowHeight="1:0.5">
+      <mat-grid-tile>
+         <ng-container *ngIf="image">
+            <img style="height: 100%; width: auto" alt="Item" [src]="image" (click)="images()" />
+         </ng-container>
+      </mat-grid-tile>
+   </mat-grid-list>
+   <div class="br"></div>
+   <div>{{ item.price | currency:'Php ' }}</div>
+</ng-container>

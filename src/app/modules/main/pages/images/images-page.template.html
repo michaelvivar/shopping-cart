@@ -1,0 +1,8 @@
+<ng-container *ngFor="let url of images">
+   <mat-grid-list cols="1" rowHeight="1:1">
+      <mat-grid-tile>
+         <img style="height: 100%; width: auto" alt="Item" [src]="url" />
+      </mat-grid-tile>
+   </mat-grid-list>
+   <div class="br"></div>
+</ng-container>

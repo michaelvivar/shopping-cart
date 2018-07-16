@@ -1,6 +1,8 @@
 import { Injectable } from "@angular/core";
 import { AngularFirestore, CollectionReference, Query, QueryDocumentSnapshot } from "angularfire2/firestore";
 import { Category } from "~/services/models/category.model";
+import { Observable } from "rxjs";
+import { map } from 'rxjs/operators';
 
 @Injectable()
 export class CategoryStore {
@@ -31,6 +33,18 @@ export class CategoryStore {
             return data.docs.map(item => this.map(item))
          })
       }
+   }
+
+   all(filterActive = true): Observable<Category[]> {
+      const query: (ref: CollectionReference) => Query = filterActive ? ref => ref.where('status', '==', true) : null;
+      return this.categories(query).snapshotChanges()
+         .pipe(map(docs => {
+            return docs.map(doc => {
+               const category = doc.payload.doc.data() as Category;
+               category.id = doc.payload.doc.id;
+               return category;
+            })
+         }))
    }
 
    get(id: any) {

@@ -1,9 +1,14 @@
 import { Injectable } from "@angular/core";
 import { Category } from "~/services/models/category.model";
+import { Observable } from "rxjs";
 
 @Injectable()
 export class CategoryService {
    allAsync(filterActive = true): Promise<Category[]> {
+      return null;
+   }
+
+   all(filterActive = true): Observable<Category[]> {
       return null;
    }
 

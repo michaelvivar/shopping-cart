@@ -18,6 +18,7 @@ export interface Item {
    size?: string;
    pictures?: Picture[];
    status: boolean;
+   selected?: boolean;
 }
 
 export interface Picture {

@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { NgxsModule } from '@ngxs/store';
 import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
+import { NgxsStoragePluginModule, StorageEngine, STORAGE_ENGINE } from '@ngxs/storage-plugin';
 
 import { AppComponent } from './app.component';
 import { PageState } from '~/store/states/page.state';
@@ -20,6 +21,9 @@ import { environment } from '~/environments/environment';
 import { ServiceModule } from '~/services/service.module';
 import { TestElementComponent } from './elements/test-element.component';
 import { createCustomElement } from '@angular/elements';
+import { PageNotFound } from './shared/pages/page-not-found.component';
+import { DataState } from '~/store/states/data.state';
+import { MyStorageEngine } from '~/store/storage-engine';
 
 @NgModule({
    imports: [
@@ -27,15 +31,17 @@ import { createCustomElement } from '@angular/elements';
       RouterModule.forRoot([
          // { path: 'admin', loadChildren: './modules/admin/admin.module#AdminModule', canActivate: [AdminGuard], canActivateChild: [AdminGuard], data: { preload: false } },
          { path: 'admin', loadChildren: './modules/admin/admin.module#AdminModule', data: { preload: false } },
-         { path: '', loadChildren: './modules/main/main.module#MainModule' }
+         { path: '', loadChildren: './modules/main/main.module#MainModule' },
+         { path: '**', component: PageNotFound }
       ], { preloadingStrategy: ModulePreloadingStrategy }),
       AngularFireModule.initializeApp(environment.firebase),
       AngularFirestoreModule,
       AngularFireAuthModule,
       AngularFireStorageModule,
-      NgxsModule.forRoot([AppState, PageState]),
+      NgxsModule.forRoot([AppState, PageState, DataState]),
       NgxsLoggerPluginModule.forRoot(),
       NgxsReduxDevtoolsPluginModule.forRoot(),
+      NgxsStoragePluginModule.forRoot(),
       SharedModule,
       ServiceModule.forFirestore()
    ],
@@ -53,6 +59,7 @@ import { createCustomElement } from '@angular/elements';
             { label: 'Account', link: '/account', icon: 'account_circle' }
          ]
       }
+      // { provide: STORAGE_ENGINE, useClass: MyStorageEngine }
    ],
    entryComponents: [TestElementComponent]
 })

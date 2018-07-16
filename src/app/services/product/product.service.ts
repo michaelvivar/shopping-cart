@@ -21,11 +21,23 @@ export class ProductService {
       return null;
    }
 
+   getWithItemsAndImagesAsync(id: any, itemId: any): Promise<Product> {
+      return null;
+   }
+
    insert(product: Product): Promise<string> {
       return null;
    }
 
    update(id: any, product: Product | { status: boolean }): Promise<void> {
+      return null;
+   }
+
+   all(limit?: number): Observable<Product[]> {
+      return null;
+   }
+
+   allItems(id: any, limit?: number): Observable<Item[]> {
       return null;
    }
 
