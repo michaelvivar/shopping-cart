@@ -12,42 +12,27 @@ export class CategoryStore {
       return this.firestore.collection('categories', fn);
    }
 
+   private filterActive(filter = true): (ref: CollectionReference) => Query {
+      return filter ? ref => ref.where('status', '==', true) : undefined;
+   }
+
    private map(doc: firebase.firestore.QueryDocumentSnapshot) {
       const category = doc.data() as Category;
       category.id = doc.id;
       return category;
    }
 
-   private getAllActiveAsync() {
-      return this.categories().ref.where('status', '==', true).get().then(data => {
-         return data.docs.map(item => this.map(item));
-      })
-   }
-
-   allAsync(filterActive = true) {
-      if (filterActive) {
-         return this.getAllActiveAsync();
-      }
-      else {
-         return this.categories().ref.get().then(data => {
-            return data.docs.map(item => this.map(item))
-         })
-      }
+   get(id: any): Observable<Category> {
+      return this.categories().doc(id).snapshotChanges()
+         .pipe(map(doc => this.map(doc.payload)));
    }
 
    all(filterActive = true): Observable<Category[]> {
-      const query: (ref: CollectionReference) => Query = filterActive ? ref => ref.where('status', '==', true) : null;
-      return this.categories(query).snapshotChanges()
-         .pipe(map(docs => {
-            return docs.map(doc => {
-               const category = doc.payload.doc.data() as Category;
-               category.id = doc.payload.doc.id;
-               return category;
-            })
-         }))
+      return this.categories(this.filterActive(filterActive)).snapshotChanges()
+         .pipe(map(docs => docs.map(doc => this.map(doc.payload.doc))))
    }
 
-   get(id: any) {
+   getAsync(id: any) {
       return this.categories().doc(id).ref.get().then(doc => this.map(doc));
    }
 

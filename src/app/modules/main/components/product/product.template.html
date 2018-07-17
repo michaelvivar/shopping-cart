@@ -8,6 +8,9 @@
       <div class="br"></div>
       <div>{{ product.name }}</div>
       <div>{{ item[0].price | currency:'Php ' }}</div>
+      <div>
+         <product-rating [id]="product.id"></product-rating>
+      </div>
       <div class="br"></div>
    </div>
 </ng-container>

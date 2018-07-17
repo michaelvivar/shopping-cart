@@ -5,7 +5,7 @@
       </mat-form-field>
       <mat-form-field>
          <mat-select [formControl]="form.get('category')" placeholder="Category">
-            <mat-option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</mat-option>
+            <mat-option *ngFor="let category of categories | sort:'name'" [value]="category.id">{{ category.name }}</mat-option>
          </mat-select>
       </mat-form-field>
       <mat-form-field>

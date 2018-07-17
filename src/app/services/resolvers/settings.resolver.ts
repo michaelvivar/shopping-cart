@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { SettingsService } from '~/services/settings/settings.service';
 import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { take } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class ColorsResolver {
@@ -9,7 +10,7 @@ export class ColorsResolver {
 
    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
       const filterActive = route.data['filterActive'];
-      return this.service.allColorsAsync((filterActive == true) ? true : false);
+      return this.service.allColors((filterActive == true) ? true : false).pipe(take(1));
    }
 }
 
@@ -19,7 +20,7 @@ export class ColorResolver {
    constructor(private service: SettingsService) { }
 
    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-      return this.service.getColor(route.paramMap.get('id'));
+      return this.service.getColorAsync(route.paramMap.get('id'));
    }
 }
 
@@ -30,7 +31,7 @@ export class SizesResolver {
 
    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
       const filterActive = route.data['filterActive'];
-      return this.service.allSizesAsync((filterActive == true) ? true : false);
+      return this.service.allSizes((filterActive == true) ? true : false).pipe(take(1))
    }
 }
 
@@ -40,6 +41,6 @@ export class SizeResolver {
    constructor(private service: SettingsService) { }
 
    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-      return this.service.getSize(route.paramMap.get('id'));
+      return this.service.getSizeAsync(route.paramMap.get('id'));
    }
 }

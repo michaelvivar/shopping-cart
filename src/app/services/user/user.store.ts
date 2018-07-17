@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Store, Select } from '@ngxs/store';
 import { AppUser } from '~/store/actions/app.actions';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { BaseUserService } from '~/services/user/base-user.service';
 import { User } from '~/services/models/user.model';
 import { AngularFirestore, CollectionReference, Query } from 'angularfire2/firestore';
@@ -18,6 +19,10 @@ export class UserStore extends BaseUserService {
 
    private users(fn?: (ref: CollectionReference) => Query) {
       return this.firestore.collection('users', fn);
+   }
+
+   private filterActive(filter = true): (ref: CollectionReference) => Query {
+      return filter ? ref => ref.where('status', '==', true) : undefined;
    }
 
    private map(doc: firebase.firestore.QueryDocumentSnapshot) {
@@ -42,18 +47,8 @@ export class UserStore extends BaseUserService {
       return promise;
    }
 
-   allAsync(filterActive = true): Promise<User[]> {
-      const ref = this.users().ref;
-      if (filterActive) {
-         return ref.where('status', '==', true).get().then(data => {
-            return data.docs.map(doc => this.map(doc));
-         });
-      }
-      else {
-         return ref.get().then(data => {
-            return data.docs.map(doc => this.map(doc));
-         });
-      }
+   all(filterActive = true): Observable<User[]> {
+      return this.users().snapshotChanges().pipe(map(docs => docs.map(doc => this.map(doc.payload.doc))));
    }
 
    insert(user: User): Promise<any> {

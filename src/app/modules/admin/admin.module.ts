@@ -1,9 +1,9 @@
-import { NgModule } from "@angular/core";
-import { RouterModule } from "@angular/router";
+import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
+import { ButtonActionComponent } from './components/button-action/button-action.component';
+import { AdminLayout } from './components/layout/admin-layout.component';
+import { LoginPage } from './pages/login/login-page.component';
 import { SharedModule } from "~/shared";
-import { AdminLayout } from "./components/layout/admin-layout.component";
-import { ButtonActionComponent } from "./components/button-action/button-action.component";
-import { LoginPage } from "./pages/login/login-page.component";
 
 @NgModule({
    imports: [

@@ -27,6 +27,7 @@
                         "input": "src/theme.scss"
                      },
                      "src/bootstrap-grid.min.css",
+                     "./node_modules/font-awesome/css/font-awesome.min.css",
                      "src/styles.css"
                   ],
                   "scripts": []

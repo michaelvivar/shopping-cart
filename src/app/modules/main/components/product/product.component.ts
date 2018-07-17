@@ -1,11 +1,11 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { Product, Item } from '~/services/models/product.model';
-import { ProductService } from '~/services/product/product.service';
+import { Component, Input } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
+import { tap } from 'rxjs/operators';
+import { Product, Item } from '~/services/models/product.model';
+import { ProductService } from '~/services/product/product.service';
 import { BaseComponent } from '~/shared';
 import { ProductData } from '~/store/actions/data.actions';
-import { tap } from '../../../../../../node_modules/rxjs/operators';
 
 @Component({
    selector: 'product',

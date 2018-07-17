@@ -1,0 +1,29 @@
+<fieldset class="rating">
+   <ng-container *ngFor="let star of stars | sort:'-value'">
+      <input type="radio" [name]="product" [value]="star.value" [rating]="rate" />
+      <label [ngClass]="star.shade" for="star" title="Star"></label>
+   </ng-container>
+</fieldset>
+<ng-container *ngIf="count > 0">
+   ({{ count }})
+</ng-container>
+
+<!-- <input type="radio" id="star5" [name]="product" [value]="5" [rating]="rate" />
+<label class="full" for="star5" title="Awesome - 5 stars"></label>
+<input type="radio" id="star4half" [name]="product" [value]="4.5" [rating]="rate" />
+<label class="half" for="star4half" title="Pretty good - 4.5 stars"></label>
+<input type="radio" id="star4" [name]="product" [value]="4" [rating]="rate" />
+<label class="full" for="star4" title="Pretty good - 4 stars"></label>
+<input type="radio" id="star3half" [name]="product" [value]="3.5" [rating]="rate" />
+<label class="half" for="star3half" title="Meh - 3.5 stars"></label>
+<input type="radio" id="star3" [name]="product" [value]="3" [rating]="rate" />
+<label class="full" for="star3" title="Meh - 3 stars"></label>
+<input type="radio" id="star2half" [name]="product" [value]="2.5" [rating]="rate" />
+<label class="half" for="star2half" title="Kinda bad - 2.5 stars"></label>
+<label class="full" for="star2" title="Kinda bad - 2 stars"></label>
+<input type="radio" id="star1half" [name]="product" [value]="1.5" [rating]="rate" />
+<label class="half" for="star1half" title="Meh - 1.5 stars"></label>
+<input type="radio" id="star1" [name]="product" [value]="1" [rating]="rate" />
+<label class="full" for="star1" title="Sucks big time - 1 star"></label>
+<input type="radio" id="starhalf" [name]="product" [value]="0.5" [rating]="rate" />
+<label class="half" for="starhalf" title="Sucks big time - 0.5 stars"></label> -->

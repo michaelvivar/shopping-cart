@@ -1,29 +1,18 @@
-import { Input, OnInit, ViewChild, ComponentFactoryResolver, Component, ViewContainerRef, ComponentFactory } from '@angular/core';
-import { ContentDirective } from './content.directive';
+import { ViewContainerRef, ComponentFactory } from '@angular/core';
 import { Observable } from 'rxjs';
 import { BreakpointObserver, BreakpointState, Breakpoints } from '@angular/cdk/layout';
-import { DefaultLayout, MobileLayout } from '~/shared';
+import { DefaultLayout, MobileLayout, HostContentComponent, ServiceLocator } from '~/shared';
 
-@Component({
-   templateUrl: './content.template.html'
-})
-export class ContentComponent implements OnInit {
-   @Input() contents: any[];
-   currentAdIndex = -1;
-   @ViewChild(ContentDirective) contentHost: ContentDirective;
+export class ContentComponent extends HostContentComponent {
 
-   constructor(
-      private componentFactoryResolver: ComponentFactoryResolver,
-      private breakpointObserver: BreakpointObserver,
-   ) { }
+   loadContent() {
+      const breakpointObserver = ServiceLocator.injector.get(BreakpointObserver);
+      const isHandset$: Observable<BreakpointState> = breakpointObserver.observe(Breakpoints.Handset)
 
-   isHandset$: Observable<BreakpointState> = this.breakpointObserver.observe(Breakpoints.Handset)
-
-   ngOnInit() {
       let viewContainerRef: ViewContainerRef;
       let componentFactory: ComponentFactory<any>;
 
-      this.isHandset$.subscribe(data => {
+      isHandset$.subscribe(data => {
          if (data.matches) {
             componentFactory = this.componentFactoryResolver.resolveComponentFactory(MobileLayout);
          }

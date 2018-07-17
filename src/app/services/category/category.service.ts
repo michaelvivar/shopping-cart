@@ -4,15 +4,11 @@ import { Observable } from "rxjs";
 
 @Injectable()
 export class CategoryService {
-   allAsync(filterActive = true): Promise<Category[]> {
-      return null;
-   }
-
    all(filterActive = true): Observable<Category[]> {
       return null;
    }
 
-   get(id: any): Promise<Category> {
+   getAsync(id: any): Promise<Category> {
       return null;
    }
 

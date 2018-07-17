@@ -28,3 +28,12 @@ export interface Picture {
    width?: number;
    height?: number;
 }
+
+export interface Review {
+   id: any;
+   user: any;
+   product: any;
+   rate: number;
+   content: string;
+   date: Date;
+}

@@ -4,7 +4,7 @@ import { BaseComponent } from '~/shared';
 import { Select } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
-import { switchMap, map } from 'rxjs/operators';
+import { switchMap, map, tap } from 'rxjs/operators';
 
 @Component({
    selector: 'product-option',
@@ -19,13 +19,11 @@ export class ProductOptionComponent extends BaseComponent {
    id: any;
 
    ngOnInit() {
-      this.subscription = this.product$.pipe(switchMap(product => {
-         this.id = product.id;
-         return this.route.paramMap.pipe(map(param => {
-            return product.items.filter(o => o.id != param.get('item'));
-         }))
-      })).subscribe(data => {
-         this.items = data;
-      })
+      this.subscription = this.product$
+         .pipe(
+            tap(product => this.id = product.id),
+            switchMap(product => this.route.paramMap
+               .pipe(map(param => product.items.filter(o => o.id != param.get('item'))))))
+         .subscribe(data => this.items = data);
    }
 }

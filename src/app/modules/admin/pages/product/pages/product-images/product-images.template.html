@@ -21,8 +21,8 @@
 
       <mat-grid-list cols="4" rowHeight="1:1" gutterSize="20">
          <ng-container *ngFor="let photo of photos$ | async">
-            <mat-grid-tile>
-               <img [src]="photo.url" image-fit class="mat-elevation-z2" />
+            <mat-grid-tile class="mat-elevation-z2">
+               <img [src]="photo.url" image-fit />
                <button btn-md mat-fab class="delete-button" color="warn" (click)="confirmDelete(photo)">
                   <mat-icon aria-label="Delete Image">delete</mat-icon>
                </button>

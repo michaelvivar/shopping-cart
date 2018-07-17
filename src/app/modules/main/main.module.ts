@@ -1,19 +1,21 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { SharedModule, MobileLayout, DefaultLayout, AuthGuard } from '~/shared';
-import { CategoriesResolver } from '~/services/resolvers/category.resolver';
-import { HomePage } from './pages/home/home-page.component';
-import { CategoriesPage } from './pages/categories/categories-page.component';
-import { CartPage } from './pages/cart/cart-page.component';
 import { ContentComponent } from './components/content/content.component';
-import { ContentDirective } from './components/content/content.directive';
-import { ProductComponent } from './components/product/product.component';
-import { ProductPage } from './pages/product/product-page.component';
 import { ProductDetailsComponent } from './components/product-details/product-details.component';
 import { ProductItemComponent } from './components/product-item/product-item.component';
 import { ProductOptionComponent } from './components/product-option/product-option.component';
+import { ProductComponent } from './components/product/product.component';
+import { CartPage } from './pages/cart/cart-page.component';
+import { CategoriesPage } from './pages/categories/categories-page.component';
+import { HomePage } from './pages/home/home-page.component';
 import { ImagesPage } from './pages/images/images-page.component';
-import { ProductResolver } from '~/services/resolvers/product.resolver';
+import { ProductPage } from './pages/product/product-page.component';
+import { SharedModule, MobileLayout, DefaultLayout, AuthGuard } from '~/shared';
+import { CategoriesResolver } from '~/services/resolvers/category.resolver';
+import { ProductWithItemsResolver } from '~/services/resolvers/product.resolver';
+import { ProductRatingComponent } from './components/product-rating/product-rating.component';
+import { ProductRatingDirective } from './components/product-rating/product-rating.directive';
+import { ProductReviewComponent } from './components/product-review/product-review.component';
 
 
 @NgModule({
@@ -28,8 +30,8 @@ import { ProductResolver } from '~/services/resolvers/product.resolver';
                   data: { filterActive: true },
                   resolve: { categories: CategoriesResolver }
                },
-               { path: 'product/:id/:item', component: ProductPage },
-               { path: 'product/images/:id/:item', component: ImagesPage, resolve: { product: ProductResolver } },
+               { path: 'product/:id/:item', component: ProductPage, resolve: { product: ProductWithItemsResolver } },
+               { path: 'product/images/:id/:item', component: ImagesPage, resolve: { product: ProductWithItemsResolver } },
                { path: 'cart', component: CartPage },
                { path: '', component: HomePage }
             ]
@@ -44,9 +46,11 @@ import { ProductResolver } from '~/services/resolvers/product.resolver';
       CartPage,
       ProductPage,
       ImagesPage,
-      ContentComponent, ContentDirective,
+      ContentComponent,
       ProductComponent, ProductDetailsComponent,
-      ProductItemComponent, ProductOptionComponent
+      ProductItemComponent, ProductOptionComponent,
+      ProductRatingComponent, ProductRatingDirective,
+      ProductReviewComponent
    ],
    entryComponents: [MobileLayout, DefaultLayout],
    providers: [

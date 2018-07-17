@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Option } from '~/services/models/option.model';
 import { AngularFirestore, CollectionReference, Query } from 'angularfire2/firestore';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable()
 export class SettingsStore {
@@ -15,27 +17,22 @@ export class SettingsStore {
       return this.firestore.collection('sizes', fn);
    }
 
+   private filterActive(filter = true): (ref: CollectionReference) => Query {
+      return filter ? ref => ref.where('status', '==', true) : undefined;
+   }
+
    private map(doc: firebase.firestore.QueryDocumentSnapshot) {
       const option = doc.data() as Option;
       option.id = doc.id;
       return option;
    }
 
-   allColorsAsync(filterActive = true): Promise<Option[]> {
-      const ref = this.colors().ref;
-      if (filterActive) {
-         return ref.where('status', '==', true).get().then(data => {
-            return data.docs.map(doc => this.map(doc));
-         });
-      }
-      else {
-         return ref.get().then(data => {
-            return data.docs.map(doc => this.map(doc));
-         });
-      }
+   allColors(filterActive = true): Observable<Option[]> {
+      return this.colors(this.filterActive(filterActive)).snapshotChanges()
+         .pipe(map(docs => docs.map(doc => this.map(doc.payload.doc))));
    }
 
-   getColor(id: any): Promise<Option> {
+   getColorAsync(id: any): Promise<Option> {
       return this.colors().doc(id).ref.get().then(doc => this.map(doc));
    }
 
@@ -47,21 +44,12 @@ export class SettingsStore {
       return this.colors().doc(id).update(color);
    }
 
-   allSizesAsync(filterActive = true): Promise<Option[]> {
-      const ref = this.sizes().ref;
-      if (filterActive) {
-         return ref.where('status', '==', true).get().then(data => {
-            return data.docs.map(doc => this.map(doc));
-         });
-      }
-      else {
-         return ref.get().then(data => {
-            return data.docs.map(doc => this.map(doc));
-         });
-      }
+   allSizes(filterActive = true): Observable<Option[]> {
+      return this.sizes(this.filterActive(filterActive)).snapshotChanges()
+         .pipe(map(docs => docs.map(doc => this.map(doc.payload.doc))));
    }
 
-   getSize(id: any): Promise<Option> {
+   getSizeAsync(id: any): Promise<Option> {
       return this.sizes().doc(id).ref.get().then(doc => this.map(doc));
    }
 

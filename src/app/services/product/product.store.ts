@@ -1,107 +1,84 @@
 import { Injectable } from '@angular/core';
-import { Product, Item, Picture } from '~/services/models/product.model';
-import { AngularFirestore, CollectionReference, Query } from 'angularfire2/firestore';
-import { map, switchMap } from 'rxjs/operators';
-import { Observable, combineLatest, pipe } from 'rxjs';
+import { Product, Item, Picture, Review } from '~/services/models/product.model';
+import { AngularFirestore, CollectionReference, Query, DocumentSnapshot, AngularFirestoreCollection } from 'angularfire2/firestore';
+import { map, switchMap, reduce } from 'rxjs/operators';
+import { Observable, combineLatest } from 'rxjs';
 
 @Injectable()
 export class ProductStore {
    constructor(private firestore: AngularFirestore) { }
 
-   private products(fn?: (ref: CollectionReference) => Query) {
+   private products(fn?: (ref: CollectionReference) => Query): AngularFirestoreCollection<Product> {
       return this.firestore.collection('products', fn);
    }
 
-   private map(doc: firebase.firestore.QueryDocumentSnapshot) {
-      const product = doc.data() as Product;
-      //product.detailsList = product.details.split(new RegExp('\r?\n','g'));
-      product.id = doc.id;
-      return product;
+   private reviews(fn?: (ref: CollectionReference) => Query): AngularFirestoreCollection<Review> {
+      return this.firestore.collection('reviews', fn);
    }
 
-   private getAllActiveAsync(): Promise<Product[]> {
-      return this.products().ref.where('status', '==', true).get().then(data => {
-         return data.docs.map(doc => {
-            const product = this.map(doc);
-            doc.ref.collection('items').get().then(items => {
-               product.items = <any>items.docs.map(item => item.id);
-            })
-            return product;
-         });
-      })
+   private filterActive(filter = true): (ref: CollectionReference) => Query {
+      return filter ? ref => ref.where('status', '==', true) : undefined;
    }
 
-   allAsync(filterActive = true): Promise<Product[]> {
-      if (filterActive) {
-         return this.getAllActiveAsync();
-      }
-      else {
-         return this.products().ref.get().then(async (data) => {
-            // return data.docs.map(doc => this.map(doc));
-            return data.docs.map(doc => {
-               const product = this.map(doc);
-               doc.ref.collection('items').get().then(items => {
-                  product.items = <any>items.docs.map(item => item.id);
-               })
-               return product;
-            });
-         })
-      }
+   private map<T>(doc: firebase.firestore.QueryDocumentSnapshot | DocumentSnapshot<T>) {
+      const data = doc.data() as T;
+      data['id'] = doc.id;
+      return data;
+   }
+
+   all(filterActive = true): Observable<Product[]> {
+      return this.products(this.filterActive(filterActive)).snapshotChanges()
+         .pipe(map(docs => docs.map(doc => this.map<Product>(doc.payload.doc))));
    }
 
    getAsync(id: any) {
       return this.products().doc(id).ref.get().then(doc => this.map(doc));
    }
 
-   getWithItemsAsync(id: any): Promise<Product> {
-      return this.products().doc(id).ref.get().then(async (doc) => {
-         const product = this.map(doc);
-         product.items = [];
-         await doc.ref.collection('items').get().then(items => {
-            items.docs.forEach(item => {
-               const data = item.data() as Item;
-               data.id = item.id;
-               product.items.push(data);
-            })
-         })
-         return product;
-      })
+   get(id: any): Observable<Product> {
+      return this.products().doc(id).snapshotChanges().pipe(map(doc => this.map<Product>(doc.payload)));
    }
 
-   getWithItemAsync(id: any, itemId: any): Promise<Product> {
-      return this.products().doc(id).ref.get().then(async (doc) => {
-         const product = this.map(doc);
-         product.items = [];
-         await doc.ref.collection('items').doc(itemId).get().then(item => {
-            const data = item.data() as Item;
-            data.id = item.id;
-            product.items.push(data);
-         })
-         return product;
-      })
+   getWithItems(id: any) {
+      return this.products().doc(id).snapshotChanges().pipe(map(doc => this.map<Product>(doc.payload)))
+         .pipe(switchMap(value => {
+            return this.allItems(id).pipe(map(items => {
+               value.items = items;
+               return value;
+            }))
+         }))
    }
 
-   getWithItemsAndImagesAsync(id: any, itemId: any): Promise<Product> {
-      return this.products().doc(id).ref.get().then(doc => {
-         const product = this.map(doc);
-         product.items = [];
-         return doc.ref.collection('items').get().then(items => {
-            product.items = <Item[]>items.docs.map(item => ({ id: item.id, ...item.data() }));
-            return product.items;
-         }).then(async (items) => {
-            await items.forEach(async (item) => {
-               return await doc.ref.collection('items').doc(item.id).collection('images').get().then(images => {
-                  product.items.find(o => o.id == item.id).pictures = <any>images.docs.map(image => image.data());
-               });
-            })
+   getWithItem(id: any, itemId: any): Observable<Product> {
+      return this.get(id).pipe(switchMap(product => this.getItem(id, itemId)
+         .pipe(map(item => {
+            product.items = [item];
             return product;
-            // return doc.ref.collection('items').doc(itemId).collection('images').get().then(images => {
-            //    items.find(o => o.id == itemId).pictures = <any>images.docs.map(image => image.data());
-            //    product.items = items;
-            //    return product;
-            // });
-         })
-      })
+         }))));
+   }
+
+   getRatings(id: any): Observable<number[]> {
+      return this.reviews(q => q.where('product', '==', id)).snapshotChanges()
+         .pipe(map(docs => docs.map(doc => doc.payload.doc.get('rate'))));
+   }
+
+   getReviews(id: any, limit?: number): Observable<Review[]> {
+      return this.reviews(q => limit ? q.where('product', '==', id).limit(limit) : q.where('product', '==', id))
+         .snapshotChanges()
+         .pipe(map(docs => {
+            return docs.map(doc => {
+               const review = doc.payload.doc.data();
+               review.date = <any>(review.date['seconds'] * 1000);
+               return review;
+            })
+         }))
+         .pipe(switchMap(reviews => combineLatest(reviews.map(review => {
+            return this.firestore.collection('users').doc(review.user).snapshotChanges().pipe(map(doc => {
+               review.user = doc.payload.data();
+               review.user.id = doc.payload.id;
+               return review;
+            }))
+         }))))
    }
 
    insert(product: Product): Promise<string> {
@@ -112,48 +89,9 @@ export class ProductStore {
       return this.products().doc(id).update(product);
    }
 
-   all(limit?: number): Observable<Product[]> {
-      return this.products(
-         ref => {
-            if (limit && limit >= 1) {
-               return ref.where('status', '==', true).limit(limit);
-            }
-            else {
-               return ref.where('status', '==', true);
-            }
-         }
-      ).snapshotChanges()
-         .pipe(map(docs => {
-            return docs.map(doc => {
-               const product = doc.payload.doc.data() as Product;
-               product.id = doc.payload.doc.id;
-               return product;
-            })
-         }))
-   }
-
-   allItems(id: any, limit?: number) {
-      const query: (ref: CollectionReference) => Query = ref => {
-         if (limit && limit >= 1) {
-            return ref.where('status', '==', true).limit(limit);
-         }
-         else {
-            return ref.where('status', '==', true);
-         }
-      };
-      return this.products().doc(id).collection('items', query).snapshotChanges()
-         .pipe(map(docs => {
-            if (docs.length > 0) {
-               return docs.map(doc => {
-                  const item = doc.payload.doc.data() as Item;
-                  item.id = doc.payload.doc.id;
-                  return item;
-               })
-            }
-            else {
-               return [];
-            }
-         }))
+   allItems(id: any, filterActive = true) {
+      return this.products().doc(id).collection('items', this.filterActive(filterActive)).snapshotChanges()
+         .pipe(map(docs => docs.length > 0 ? docs.map(doc => this.map<Item>(doc.payload.doc)) : []))
          .pipe(switchMap(values => combineLatest(values.map(value => {
             return this.allImages(id, value.id)
                .pipe(map(images => {
@@ -161,6 +99,11 @@ export class ProductStore {
                   return value;
                }))
          }))))
+   }
+
+   getItem(id: any, itemId: any): Observable<Item> {
+      return this.products().doc(id).collection('items').doc(itemId).snapshotChanges()
+         .pipe(map(doc => this.map<Item>(doc.payload)));
    }
 
    insertItem(productId, item: Item): Promise<string> {
@@ -183,17 +126,6 @@ export class ProductStore {
 
    allImages(productId: any, itemId: any): Observable<Picture[]> {
       return this.products().doc(productId).collection('items').doc(itemId).collection('images').snapshotChanges()
-         .pipe(map(docs => {
-            if (docs.length > 0) {
-               return docs.map(doc => {
-                  const image = doc.payload.doc.data() as Picture;
-                  image.id = doc.payload.doc.id;
-                  return image;
-               })
-            }
-            else {
-               return [];
-            }
-         }))
+         .pipe(map(docs => docs.length > 0 ? docs.map(doc => this.map<Picture>(doc.payload.doc)) : []))
    }
 }

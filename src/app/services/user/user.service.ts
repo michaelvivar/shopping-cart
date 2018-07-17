@@ -24,7 +24,7 @@ export class UserService extends BaseUserService {
       return promise;
    }
 
-   allAsync(filterActive = true): Promise<User[]> {
+   all(filterActive = true): Observable<User[]> {
       return null;
    }
 

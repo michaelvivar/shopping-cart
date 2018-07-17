@@ -1,7 +1,18 @@
 <div class="br">
    <ng-container *ngIf="product && product.items">
       <product-item></product-item>
+      <product-rating [id]="product.id"></product-rating>
+      <div class="br">
+         <mat-divider></mat-divider>
+      </div>
       <product-details></product-details>
+      <div class="br">
+         <mat-divider></mat-divider>
+      </div>
       <product-option></product-option>
+      <div class="br">
+         <mat-divider></mat-divider>
+      </div>
+      <product-review [limit]="3"></product-review>
    </ng-container>
 </div>

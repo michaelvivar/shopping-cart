@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { UserService } from "~/services/user/user.service";
 import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from "@angular/router";
+import { take } from "rxjs/operators";
 
 @Injectable({ providedIn: 'root' })
 export class UserNavsResolver implements Resolve<any[]> {
@@ -25,6 +26,6 @@ export class UsersResolver {
 
    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
       const filterActive = route.data['filterActive'];
-      return this.service.allAsync((filterActive == true) ? true : false);
+      return this.service.all((filterActive == true) ? true : false).pipe(take(1));
    }
 }

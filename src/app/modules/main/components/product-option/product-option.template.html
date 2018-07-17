@@ -1,5 +1,5 @@
 <ng-container *ngIf="items && items.length > 0">
-   <div>Product options:</div>
+   <div>Options:</div>
    <mat-nav-list>
       <ng-container *ngFor="let item of items">
          <a mat-list-item [routerLink]="['/product', id,item.id]">

@@ -27,11 +27,13 @@ import { PageTitleDirective } from './directives/page-title.directive';
 import { InputCurrencyDirective } from './directives/input-currency.directive';
 import { ImageFitDirective } from './directives/image-fit.directive';
 import { PageNotFound } from './pages/page-not-found.component';
+import { HostContentDirective } from './components/host-content/host-content.directive';
+import { HostContentComponent } from './components/host-content/host-content.component';
 
 const pipes = [SortPipe, JoinPipe, StatusPipe, EllipsisPipe];
 const directives = [
    LogoutDirective, ButtonMediumDirective, VisibleDirective, MobileClassDirective,
-   PageTitleDirective, InputCurrencyDirective, ImageFitDirective
+   PageTitleDirective, InputCurrencyDirective, ImageFitDirective, HostContentDirective
 ];
 
 @NgModule({
@@ -40,7 +42,7 @@ const directives = [
       ...materials
    ],
    declarations: [
-      DefaultLayout, MobileLayout,
+      HostContentComponent, DefaultLayout, MobileLayout,
       AlertDialog, ConfirmDialog, ProgressBarComponent,
       BackButtonComponent, LoginFormComponent, SignupFormComponent,
       PageNotFound,
@@ -49,7 +51,7 @@ const directives = [
    ],
    exports: [
       CommonModule, FormsModule, ReactiveFormsModule,
-      DefaultLayout, MobileLayout,
+      HostContentComponent, DefaultLayout, MobileLayout,
       ProgressBarComponent, BackButtonComponent, LoginFormComponent,
       SignupFormComponent,
       ...materials,

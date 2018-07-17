@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Product, Item } from '~/services/models/product.model';
+import { Product, Item, Review } from '~/services/models/product.model';
 import { Observable } from 'rxjs';
 
 @Injectable()
 export class ProductService {
 
-   allAsync(filterActive = true): Promise<Product[]> {
+   all(filterActive = true): Observable<Product[]> {
       return null;
    }
 
@@ -13,15 +13,23 @@ export class ProductService {
       return null;
    }
 
-   getWithItemsAsync(id: any): Promise<Product> {
+   get(id: any): Observable<Product> {
       return null;
    }
 
-   getWithItemAsync(id: any, itemId: any): Promise<Product> {
+   getWithItems(id: any): Observable<Product> {
       return null;
    }
 
-   getWithItemsAndImagesAsync(id: any, itemId: any): Promise<Product> {
+   getWithItem(id: any, itemId: any): Observable<Product> {
+      return null;
+   }
+
+   getRatings(id: any): Observable<number[]> {
+      return null;
+   }
+
+   getReviews(id: any, limit?: number): Observable<Review[]> {
       return null;
    }
 
@@ -33,11 +41,7 @@ export class ProductService {
       return null;
    }
 
-   all(limit?: number): Observable<Product[]> {
-      return null;
-   }
-
-   allItems(id: any, limit?: number): Observable<Item[]> {
+   allItems(id: any, filterActive = true): Observable<Item[]> {
       return null;
    }
 

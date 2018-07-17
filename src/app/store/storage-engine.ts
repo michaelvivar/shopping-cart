@@ -11,10 +11,12 @@ export class MyStorageEngine implements StorageEngine {
    }
 
    getItem(key) {
+      console.log(key);
       return MyStorageEngine.Storage[key];
    }
 
    setItem(key, val) {
+      console.log(val);
       MyStorageEngine.Storage[key] = val;
    }
 

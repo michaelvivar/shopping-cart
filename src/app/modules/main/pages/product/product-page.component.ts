@@ -23,14 +23,9 @@ export class ProductPage extends Page {
    product: Product;
 
    ngOnInit() {
-      this.product$.subscribe(data => {
-         if (!data) {
-            this.router.navigate(['/']);
-         }
-         else {
-            this.product = data;
-            this.store.dispatch(new PageTitle(this.product.name));
-         }
+      this.product$.subscribe(product => {
+         this.product = product;
+         this.store.dispatch(new PageTitle(product.name));
       }).unsubscribe();
    }
 }

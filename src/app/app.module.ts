@@ -1,27 +1,27 @@
-import { NgModule, Injector } from '@angular/core';
+import { Injector, NgModule } from '@angular/core';
+import { createCustomElement } from '@angular/elements';
+import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FormsModule } from '@angular/forms';
-
-import { NgxsModule } from '@ngxs/store';
-import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
+import { RouterModule } from '@angular/router';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
-import { NgxsStoragePluginModule, StorageEngine, STORAGE_ENGINE } from '@ngxs/storage-plugin';
-
+import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
+import { NgxsStoragePluginModule, STORAGE_ENGINE, StorageEngine } from '@ngxs/storage-plugin';
+import { NgxsModule } from '@ngxs/store';
+import { AngularFireModule } from 'angularfire2';
+import { AngularFireAuthModule } from 'angularfire2/auth';
+import { AngularFirestoreModule } from 'angularfire2/firestore';
+import { AngularFireStorageModule } from 'angularfire2/storage';
 import { AppComponent } from './app.component';
+import { TestElementComponent } from './elements/test-element.component';
+import { PageNotFound } from './shared/pages/page-not-found.component';
+
+
 import { PageState } from '~/store/states/page.state';
 import { SharedModule, AuthGuard, AdminGuard, ModulePreloadingStrategy } from '~/shared';
-import { RouterModule } from '@angular/router';
 import { AppState } from '~/store/states/app.state';
-import { AngularFireModule } from 'angularfire2';
-import { AngularFireAuthModule } from "angularfire2/auth";
-import { AngularFirestoreModule } from 'angularfire2/firestore';
-import { AngularFireStorageModule } from "angularfire2/storage";
 import { environment } from '~/environments/environment';
 import { ServiceModule } from '~/services/service.module';
-import { TestElementComponent } from './elements/test-element.component';
-import { createCustomElement } from '@angular/elements';
-import { PageNotFound } from './shared/pages/page-not-found.component';
 import { DataState } from '~/store/states/data.state';
 import { MyStorageEngine } from '~/store/storage-engine';
 

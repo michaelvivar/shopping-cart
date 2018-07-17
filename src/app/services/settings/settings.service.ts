@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Option } from '~/services/models/option.model';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class SettingsService {
-   allColorsAsync(filterActive = true): Promise<Option[]> {
+   allColors(filterActive = true): Observable<Option[]> {
       return <any>[];
    }
 
@@ -15,11 +16,11 @@ export class SettingsService {
       return null;
    }
 
-   getColor(id: any): Promise<Option> {
+   getColorAsync(id: any): Promise<Option> {
       return null;
    }
 
-   allSizesAsync(filterActive = true): Promise<Option[]> {
+   allSizes(filterActive = true): Observable<Option[]> {
       return <any>[];
    }
 
@@ -31,7 +32,7 @@ export class SettingsService {
       return null;
    }
 
-   getSize(id: any): Promise<Option> {
+   getSizeAsync(id: any): Promise<Option> {
       return null;
    }
 }
