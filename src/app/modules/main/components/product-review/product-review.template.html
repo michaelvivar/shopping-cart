@@ -1,6 +1,11 @@
-<div>Reviews:</div>
-<ul>
-   <ng-container *ngFor="let review of reviews">
-      <li>{{ review.content }} by {{ review.user.username }} - {{ review.date | date }}</li>
-   </ng-container>
-</ul>
+<ng-container *ngIf="reviews && reviews.length > 0">
+   <div class="br">
+      <mat-divider></mat-divider>
+   </div>
+   <div>Reviews:</div>
+   <ul>
+      <ng-container *ngFor="let review of reviews">
+         <li>{{ review.content }} by {{ review.user.username }} - {{ review.date | date }}</li>
+      </ng-container>
+   </ul>
+</ng-container>

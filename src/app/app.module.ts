@@ -65,7 +65,6 @@ import { MyStorageEngine } from '~/store/storage-engine';
 })
 export class AppModule {
    constructor(injector: Injector) {
-      const ele = createCustomElement(TestElementComponent, { injector: injector });
-      customElements.define('my-form', ele);
+
    }
 }

@@ -1,12 +1,14 @@
-<fieldset class="rating">
-   <ng-container *ngFor="let star of stars | sort:'-value'">
-      <input type="radio" [name]="product" [value]="star.value" [rating]="rate" />
-      <label [ngClass]="star.shade" for="star" title="Star"></label>
+<div class="br">
+   <fieldset class="rating">
+      <ng-container *ngFor="let star of stars | sort:'-value'">
+         <input type="radio" [name]="product" [value]="star.value" [rating]="rate" />
+         <label [ngClass]="star.shade" for="star" title="Star"></label>
+      </ng-container>
+   </fieldset>
+   <ng-container *ngIf="count > 0">
+      ({{ count }})
    </ng-container>
-</fieldset>
-<ng-container *ngIf="count > 0">
-   ({{ count }})
-</ng-container>
+</div>
 
 <!-- <input type="radio" id="star5" [name]="product" [value]="5" [rating]="rate" />
 <label class="full" for="star5" title="Awesome - 5 stars"></label>
