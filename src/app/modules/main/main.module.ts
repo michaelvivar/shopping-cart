@@ -27,13 +27,27 @@ import { ProductReviewComponent } from './components/product-review/product-revi
                { path: 'account', loadChildren: './../account/account.module#AccountModule' },
                {
                   path: 'categories', component: CategoriesPage,
-                  data: { filterActive: true },
+                  data: { filterActive: true, pLevel: 1.2 },
                   resolve: { categories: CategoriesResolver }
                },
-               { path: 'product/:id/:item', component: ProductPage, resolve: { product: ProductWithItemsResolver } },
-               { path: 'product/images/:id/:item', component: ImagesPage, resolve: { product: ProductWithItemsResolver } },
-               { path: 'cart', component: CartPage },
-               { path: '', component: HomePage }
+               {
+                  path: 'product/:id/:item', component: ProductPage,
+                  data: { pLevel: 1.3 },
+                  resolve: { product: ProductWithItemsResolver }
+               },
+               {
+                  path: 'product/images/:id/:item', component: ImagesPage,
+                  data: { pLevel: 2 },
+                  resolve: { product: ProductWithItemsResolver }
+               },
+               {
+                  path: 'cart', component: CartPage,
+                  data: { pLevel: 1.4 }
+               },
+               {
+                  path: '', component: HomePage,
+                  data: { pLevel: 1.5 }
+               }
             ]
          }
       ]),

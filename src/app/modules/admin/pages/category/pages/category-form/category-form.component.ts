@@ -24,15 +24,15 @@ export class CategoryFormPage extends Form {
       this.formControls();
       this.category = this.route.snapshot.data['category'];
       if (this.category) {
-         this.store.dispatch(new PageTitle('Edit Category: ' + this.category.name));
+         this.title = 'Edit Category: ' + this.category.name;
          this.form.get('name').setValue(this.category.name);
          this.form.get('link').setValue(this.category.link);
          this.form.get('icon').setValue(this.category.icon);
       }
       else {
-         this.store.dispatch(new PageTitle('Add New Category'));
+         this.title = 'Add New Category';
       }
-      this.store.dispatch(new BackButton({ link: '/admin/categories' }));
+      this.backButton('/admin/categories');
    }
 
    private formControls() {
@@ -74,6 +74,6 @@ export class CategoryFormPage extends Form {
    private saved() {
       this.submitted = false;
       this.openSnackBar('Saved', 'Close');
-      this.store.dispatch(new PageTitle('Edit: ' + this.form.get('name').value));
+      this.title = 'Edit: ' + this.form.get('name').value;
    }
 }

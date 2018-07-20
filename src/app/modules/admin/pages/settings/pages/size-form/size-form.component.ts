@@ -3,7 +3,6 @@ import { Form } from '~/shared';
 import { Validators, FormControl } from '@angular/forms';
 import { Option } from '~/services/models/option.model';
 import { ActivatedRoute } from '@angular/router';
-import { PageTitle, BackButton } from '~/store/actions/page.actions';
 import { SettingsService } from '~/services/settings/settings.service';
 
 @Component({
@@ -24,12 +23,12 @@ export class SizeFormPage extends Form {
       if (this.size) {
          this.form.get('text').setValue(this.size.text);
          this.form.get('value').setValue(this.size.value);
-         this.store.dispatch(new PageTitle('Edit: ' + this.size.text));
+         this.title = 'Edit: ' + this.size.text;
       }
       else {
-         this.store.dispatch(new PageTitle('Add New Size'));
+         this.title = 'Add New Size';
       }
-      this.store.dispatch(new BackButton({ link: '/admin/settings/sizes' }));
+      this.backButton('/admin/settings/sizes');
    }
 
    formControls() {
@@ -69,6 +68,6 @@ export class SizeFormPage extends Form {
    private saved() {
       this.submitted = false;
       this.openSnackBar('Saved', 'Close');
-      this.store.dispatch(new PageTitle('Edit: ' + this.form.get('text').value));
+      this.title = 'Edit: ' + this.form.get('text').value;
    }
 }

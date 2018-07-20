@@ -3,7 +3,6 @@ import { Form } from '~/shared';
 import { Validators, FormControl } from '@angular/forms';
 import { Option } from '~/services/models/option.model';
 import { ActivatedRoute } from '@angular/router';
-import { PageTitle, BackButton } from '~/store/actions/page.actions';
 import { SettingsService } from '~/services/settings/settings.service';
 
 @Component({
@@ -24,12 +23,12 @@ export class ColorFormPage extends Form {
       if (this.color) {
          this.form.get('text').setValue(this.color.text);
          this.form.get('value').setValue(this.color.value);
-         this.store.dispatch(new PageTitle('Edit: ' + this.color.text));
+         this.title = 'Edit: ' + this.color.text;
       }
       else {
-         this.store.dispatch(new PageTitle('Add New Color'));
+         this.title = 'Add New Color';
       }
-      this.store.dispatch(new BackButton({ link: '/admin/settings/colors' }));
+      this.backButton('/admin/settings/colors');
    }
 
    formControls() {
@@ -69,6 +68,6 @@ export class ColorFormPage extends Form {
    private saved() {
       this.submitted = false;
       this.openSnackBar('Saved', 'Close');
-      this.store.dispatch(new PageTitle('Edit: ' + this.form.get('text').value));
+      this.title = 'Edit: ' + this.form.get('text').value;
    }
 }

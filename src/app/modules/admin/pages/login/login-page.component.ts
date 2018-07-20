@@ -14,7 +14,7 @@ export class LoginPage extends Form {
    ) { super(true) }
 
    ngOnInit() {
-      this.store.dispatch(new PageTitle('Log In'));
+      this.title = 'Log In';
       this.form = this.formbuilder.group({
          username: new FormControl(null, [Validators.required]),
          password: new FormControl(null, [Validators.required, Validators.minLength(6)])

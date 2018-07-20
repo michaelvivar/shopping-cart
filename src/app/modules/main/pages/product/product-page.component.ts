@@ -5,8 +5,6 @@ import { Product } from '~/services/models/product.model';
 import { ProductService } from '~/services/product/product.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Page } from '~/shared';
-import { PageTitle } from '~/store/actions/page.actions';
-import { ProductData } from '~/store/actions/data.actions';
 
 @Component({
    templateUrl: './product-page.template.html'
@@ -25,7 +23,7 @@ export class ProductPage extends Page {
    ngOnInit() {
       this.product$.subscribe(product => {
          this.product = product;
-         this.store.dispatch(new PageTitle(product.name));
+         this.title = product.name;
       }).unsubscribe();
    }
 }

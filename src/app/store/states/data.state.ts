@@ -2,7 +2,6 @@ import { Product } from "~/services/models/product.model";
 import { State, Action, StateContext, Store } from "@ngxs/store";
 import { ProductData, CategoriesData } from "~/store/actions/data.actions";
 import { Category } from "~/services/models/category.model";
-import { ServiceLocator } from "~/shared";
 
 interface DataStateModel {
    product: Product;

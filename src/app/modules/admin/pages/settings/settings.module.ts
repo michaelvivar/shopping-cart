@@ -13,12 +13,12 @@ import { SizeFormPage } from './pages/size-form/size-form.component';
       SharedModule,
       RouterModule.forChild([
          { path: '', component: MainPage },
-         { path: 'colors', component: ColorTablePage, resolve: { colors: ColorsResolver } },
-         { path: 'color/add', component: ColorFormPage },
-         { path: 'color/edit/:id', component: ColorFormPage, resolve: { color: ColorResolver } },
-         { path: 'sizes', component: SizeTablePage, resolve: { sizes: SizesResolver } },
-         { path: 'size/add', component: SizeFormPage },
-         { path: 'size/edit/:id', component: SizeFormPage, resolve: { size: SizeResolver } },
+         { path: 'colors', component: ColorTablePage, data: { pLevel: 2 }, resolve: { colors: ColorsResolver } },
+         { path: 'color/add', component: ColorFormPage, data: { pLevel: 3 } },
+         { path: 'color/edit/:id', component: ColorFormPage, data: { pLevel: 3 }, resolve: { color: ColorResolver } },
+         { path: 'sizes', component: SizeTablePage, data: { pLevel: 2 }, resolve: { sizes: SizesResolver } },
+         { path: 'size/add', component: SizeFormPage, data: { pLevel: 3 } },
+         { path: 'size/edit/:id', component: SizeFormPage, data: { pLevel: 3 }, resolve: { size: SizeResolver } },
       ])
    ],
    declarations: [

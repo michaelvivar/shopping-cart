@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { Table, sortBy } from '~/shared';
 import { ActivatedRoute } from '@angular/router';
 import { Product, Item } from '~/services/models/product.model';
-import { PageTitle, BackButton, AddButton } from '~/store/actions/page.actions';
 import { ProductService } from '~/services/product/product.service';
 
 @Component({
@@ -21,9 +20,9 @@ export class ProductItemsPage extends Table {
    ngOnInit() {
       this.product = this.route.snapshot.data['product'] as Product;
       this.data = this.product.items;
-      this.store.dispatch(new PageTitle('Items: ' + this.product.name));
-      this.store.dispatch(new BackButton({ link: '/admin/products' }));
-      this.store.dispatch(new AddButton({ link: '/admin/product/item/add/' + this.product.id }));
+      this.title = 'Items: ' + this.product.name;
+      this.backButton('/admin/products');
+      this.addButton('/admin/product/item/add/' + this.product.id);
    }
 
    toggleStatus(item: Item) {

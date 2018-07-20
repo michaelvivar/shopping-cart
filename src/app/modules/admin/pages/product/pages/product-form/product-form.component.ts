@@ -5,7 +5,6 @@ import { Category } from '~/services/models/category.model';
 import { Product } from '~/services/models/product.model';
 import { ProductService } from '~/services/product/product.service';
 import { Form } from '~/shared';
-import { BackButton, PageTitle } from '~/store/actions/page.actions';
 
 @Component({
   templateUrl: './product-form.template.html',
@@ -30,12 +29,12 @@ export class ProductFormPage extends Form {
       this.form.get('name').setValue(this.product.name);
       this.form.get('category').setValue(this.product.category);
       this.form.get('details').setValue(this.product.details);
-      this.store.dispatch(new PageTitle('Edit: ' + this.product.name));
+      this.title = 'Edit: ' + this.product.name;
     }
     else {
-      this.store.dispatch(new PageTitle('Add New Product'));
+      this.title = 'Add New Product';
     }
-    this.store.dispatch(new BackButton({ link: '/admin/products' }));
+    this.backButton('/admin/products');
   }
 
   private formControls() {
@@ -73,6 +72,6 @@ export class ProductFormPage extends Form {
   private saved() {
     this.submitted = false;
     this.openSnackBar('Saved', 'Close');
-    this.store.dispatch(new PageTitle('Edit: ' + this.form.get('name').value));
+    this.title = 'Edit: ' + this.form.get('name').value;
   }
 }

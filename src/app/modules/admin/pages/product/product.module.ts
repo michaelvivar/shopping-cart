@@ -17,34 +17,40 @@ import { CategoriesResolver } from '~/services/resolvers/category.resolver';
       RouterModule.forChild([
          {
             path: 'items/:id', component: ProductItemsPage,
+            data: { pLevel: 3 },
             resolve: { product: ProductWithItemsResolver }
          },
          {
             path: 'item/images/:id/:itemId', component: ProductImagesPage,
+            data: { pLevel: 4 },
             resolve: { product: ProductWithItemResolver }
          },
          {
-            path: 'item/edit/:id/:itemId', component: ItemFormPage, data: { filterActive: true },
+            path: 'item/edit/:id/:itemId', component: ItemFormPage,
+            data: { filterActive: true, pLevel: 4 },
             resolve: {
                product: ProductWithItemResolver,
                colors: ColorsResolver, sizes: SizesResolver
             }
          },
          {
-            path: 'item/add/:id', component: ItemFormPage, data: { filterActive: true },
+            path: 'item/add/:id', component: ItemFormPage,
+            data: { filterActive: true, pLevel: 4 },
             resolve: {
                product: ProductResolver,
                colors: ColorsResolver, sizes: SizesResolver
             }
          },
          {
-            path: 'edit/:id', component: ProductFormPage, data: { filterActive: true },
+            path: 'edit/:id', component: ProductFormPage,
+            data: { filterActive: true, pLevel: 3 },
             resolve: {
                product: ProductResolver, categories: CategoriesResolver,
             }
          },
          {
-            path: 'add', component: ProductFormPage, data: { filterActive: true },
+            path: 'add', component: ProductFormPage,
+            data: { filterActive: true, pLevel: 3 },
             resolve: {
                categories: CategoriesResolver
             }

@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Table, sortBy } from '~/shared';
-import { AddButton, PageTitle, BackButton } from '~/store/actions/page.actions';
 import { Option } from '~/services/models/option.model';
 import { SettingsService } from '~/services/settings/settings.service';
 
@@ -19,9 +18,9 @@ export class SizeTablePage extends Table {
    ngOnInit() {
       const sizes = this.route.snapshot.data['sizes'] as Option[];
       this.data = sizes.sort(sortBy('-status', 'text'));
-      this.store.dispatch(new PageTitle('Sizes'));
-      this.store.dispatch(new AddButton({ link: '/admin/settings/size/add' }));
-      this.store.dispatch(new BackButton({ link: '/admin/settings' }));
+      this.title = 'Sizes';
+      this.addButton('/admin/settings/size/add');
+      this.backButton('/admin/settings');
    }
 
    toggleStatus(size: Option) {

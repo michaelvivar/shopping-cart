@@ -11,12 +11,12 @@ import { LoginPage } from './pages/login/login-page.component';
     RouterModule.forChild([
       {
         path: '', component: AdminLayout, children: [
-          { path: 'categories', data: { pLevel: 1 }, loadChildren: './pages/category/category.module#CategoryModule' },
+          { path: 'categories', data: { pLevel: 1.1 }, loadChildren: './pages/category/category.module#CategoryModule' },
           { path: 'category', data: { pLevel: 2 }, loadChildren: './pages/category/category.module#CategoryModule' },
-          { path: 'products', data: { pLevel: 1 }, loadChildren: './pages/product/product.module#ProductModule' },
+          { path: 'products', data: { pLevel: 1.2 }, loadChildren: './pages/product/product.module#ProductModule' },
           { path: 'product', data: { pLevel: 2 }, loadChildren: './pages/product/product.module#ProductModule' },
-          { path: 'settings', data: { pLevel: 1 }, loadChildren: './pages/settings/settings.module#SettingsModule' },
-          { path: 'users', loadChildren: './pages/user/user.module#UserModule' },
+          { path: 'settings', data: { pLevel: 1.3 }, loadChildren: './pages/settings/settings.module#SettingsModule' },
+          { path: 'users', data: { pLevel: 1.4 }, loadChildren: './pages/user/user.module#UserModule' },
           { path: 'login', component: LoginPage }
         ]
       }

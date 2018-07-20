@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { Table, sortBy } from '~/shared';
 import { ActivatedRoute } from '@angular/router';
 import { Product } from '~/services/models/product.model';
-import { PageTitle, AddButton } from '~/store/actions/page.actions';
 import { ProductService } from '~/services/product/product.service';
 
 @Component({
@@ -20,8 +19,8 @@ export class ProductTablePage extends Table {
    ngOnInit() {
       const products = this.route.snapshot.data['products'] as Product[] || [];
       this.data = products.sort(sortBy('-status', 'name'));
-      this.store.dispatch(new PageTitle('Products'));
-      this.store.dispatch(new AddButton({ link: '/admin/product/add' }));
+      this.title = 'Products';
+      this.addButton('/admin/product/add');
    }
 
    toggleStatus(product: Product) {

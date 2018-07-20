@@ -22,8 +22,8 @@ export class CategoryTablePage extends Table {
       if (categories) {
          this.data = categories.sort(sortBy('-status', 'name'))
       }
-      this.store.dispatch(new PageTitle('Categories'));
-      this.store.dispatch(new AddButton({ link: '/admin/category/add' }));
+      this.title = 'Categories';
+      this.addButton('/admin/category/add');
    }
 
    toggleStatus(category: Category) {

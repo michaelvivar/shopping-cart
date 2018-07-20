@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { Table, sortBy } from '~/shared';
 import { ActivatedRoute } from '@angular/router';
 import { User } from '~/services/models/user.model';
-import { PageTitle, AddButton } from '~/store/actions/page.actions';
 import { UserService } from '~/services/user/user.service';
 
 @Component({
@@ -19,9 +18,8 @@ export class UserTablePage extends Table {
 
    ngOnInit() {
       const users = this.route.snapshot.data['users'] as User[];
-      this.data = users.sort(sortBy('-status', 'username'));
-      this.store.dispatch(new PageTitle('Users'));
-      this.store.dispatch(new AddButton({ link: '/admin/user/add' }));
+      this.title = 'Users';
+      this.addButton('/admin/user/add');
    }
 
    toggleStatus(user: User) {

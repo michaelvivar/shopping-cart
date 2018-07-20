@@ -1,7 +1,7 @@
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { Subscription } from "rxjs";
 import { Store } from '@ngxs/store';
-import { PageTitle, ResetButtons } from '~/store/actions/page.actions';
+import { PageTitle, ResetButtons, AddButton, BackButton } from '~/store/actions/page.actions';
 import { ServiceLocator } from './service-locator';
 import { safeHtml } from './html-helper';
 import { AlertDialog } from '../components/alert-dialog/alert-dialog.component';
@@ -64,13 +64,23 @@ export abstract class BaseComponent {
          duration: 2000,
       });
    }
+
+   set title(value: string) {
+      if (this._asPage) {
+         this.store.dispatch(new PageTitle(value));
+      }
+   }
+
+   addButton(link: string) {
+      this.store.dispatch(new AddButton({ link }));
+   }
+
+   backButton(link: string) {
+      this.store.dispatch(new BackButton({ link }));
+   }
 }
 
 export abstract class Page extends BaseComponent {
-
-   set title(value: string) {
-      this.store.dispatch(new PageTitle(value));
-   }
 
    constructor() {
       super(true);

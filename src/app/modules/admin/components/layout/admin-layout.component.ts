@@ -1,9 +1,43 @@
-import { animate, group, query, style, transition, trigger } from '@angular/animations';
+import { animate, group, query, style, transition, trigger, keyframes } from '@angular/animations';
 import { Location } from '@angular/common';
 import { Component, Inject, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material';
 import { Select } from '@ngxs/store';
 import { Observable } from 'rxjs';
+
+const next = [
+    style({ height: '!' }),
+    query(':enter', style({ transform: 'translateX(100%)' })),
+    query(':enter, :leave', style({ position: 'absolute', left: 0, right: 0 })),
+    group([
+        query(':leave', [
+            animate('0.7s cubic-bezier(.35, 0, .25, 1)', keyframes([
+                style({ opacity: 1, transform: 'translateX(-25%)' }),
+                style({ opacity: 0.5, transform: 'translateX(-50%)' }),
+                style({ opacity: 0.75, transform: 'translateX(-75%)' }),
+                style({ opacity: 0, transform: 'translateX(-100%)' })
+            ])
+            )], { optional: true }),
+        query(':enter', [
+            animate('0.7s cubic-bezier(.35, 0, .25, 1)', keyframes([
+                style({ opacity: 0, transform: 'translateX(25%)' }),
+                style({ opacity: 0.5, transform: 'translateX(50%)' }),
+                style({ opacity: 0.75, transform: 'translateX(75%)' }),
+                style({ opacity: 1, transform: 'translateX(0)' })
+            ])
+            )], { optional: true }),
+    ])
+];
+
+const back = [
+    style({ height: '!' }),
+    query(':enter', style({ transform: 'translateX(-100%)' })),
+    query(':enter, :leave', style({ position: 'absolute', left: 0, right: 0 })),
+    group([
+        query(':leave', [animate('0.5s cubic-bezier(.35, 0, .25, 1)', style({ transform: 'translateX(100%)' }))]),
+        query(':enter', [animate('0.5s cubic-bezier(.35, 0, .25, 1)', style({ transform: 'translateX(0)' }))])
+    ])
+]
 
 @Component({
     templateUrl: './admin-layout.template.html',
@@ -28,24 +62,12 @@ import { Observable } from 'rxjs';
   `],
     animations: [
         trigger('pageAnimation', [
-            transition('1 => 2', [
-                style({ height: '!' }),
-                query(':enter', style({ transform: 'translateX(100%)' })),
-                query(':enter, :leave', style({ position: 'absolute', left: 0, right: 0 })),
-                group([
-                    query(':leave', [animate('0.3s cubic-bezier(.35, 0, .25, 1)', style({ transform: 'translateX(-100%)' }))]),
-                    query(':enter', [animate('0.3s cubic-bezier(.35, 0, .25, 1)', style({ transform: 'translateX(0)' }))])
-                ])
-            ]),
-            transition('2 => 1', [
-                style({ height: '!' }),
-                query(':enter', style({ transform: 'translateX(-100%)' })),
-                query(':enter, :leave', style({ position: 'absolute', left: 0, right: 0 })),
-                group([
-                    query(':leave', [animate('0.3s cubic-bezier(.35, 0, .25, 1)', style({ transform: 'translateX(100%)' }))]),
-                    query(':enter', [animate('0.3s cubic-bezier(.35, 0, .25, 1)', style({ transform: 'translateX(0)' }))])
-                ])
-            ])
+            transition('3 => 4', next),
+            transition('2 => 3', next),
+            transition('4 => *', back),
+            transition('3 => *', back),
+            transition('2 => *', back),
+            transition('* => *', next)
         ])
     ]
 })

@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Table, sortBy } from '~/shared';
-import { AddButton, PageTitle, BackButton } from '~/store/actions/page.actions';
 import { Option } from '~/services/models/option.model';
 import { SettingsService } from '~/services/settings/settings.service';
 
@@ -19,9 +18,9 @@ export class ColorTablePage extends Table {
    ngOnInit() {
       const colors = this.route.snapshot.data['colors'] as Option[];
       this.data = colors.sort(sortBy('-status', 'text'));
-      this.store.dispatch(new PageTitle('Colors'));
-      this.store.dispatch(new AddButton({ link: '/admin/settings/color/add' }));
-      this.store.dispatch(new BackButton({ link: '/admin/settings' }));
+      this.title = 'Colors';
+      this.addButton('/admin/settings/color/add');
+      this.backButton('/admin/settings');
    }
 
    toggleStatus(color: Option) {

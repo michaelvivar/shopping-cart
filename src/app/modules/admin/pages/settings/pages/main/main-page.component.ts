@@ -8,6 +8,6 @@ import { PageTitle } from '~/store/actions/page.actions';
 export class MainPage extends Page {
 
    ngOnInit() {
-      this.store.dispatch(new PageTitle('Settings'));
+      this.title = 'Settings';
    }
 }
