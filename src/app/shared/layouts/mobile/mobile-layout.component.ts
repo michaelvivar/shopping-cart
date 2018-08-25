@@ -34,32 +34,7 @@ const back = [
 
 @Component({
    templateUrl: './mobile-layout.template.html',
-   styles: [
-      `
-      .nav-top .mat-toolbar {
-         position: fixed;
-         top: 0;
-         left: 0;
-         z-index: 100;
-         width: 100%;
-      }
-      .nav-bottom .mat-grid-list {
-         position: fixed;
-         bottom: 0;
-         left: 0;
-         z-index: 100;
-         width: 100%;
-      }
-      .nav-bottom .mat-grid-list button {
-         color: white !important;
-      }
-      .main-outlet {
-         padding-top: 56px;
-         padding-bottom: 50px;
-         position: relative;
-      }
-      `
-   ],
+   styleUrls: ['mobile-layout.style.css'],
    animations: [
       trigger('pageAnimation', [
          transition('3 => 4', next),

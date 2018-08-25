@@ -7,25 +7,21 @@ import { Observable } from 'rxjs';
 
 const next = [
     style({ height: '!' }),
-    query(':enter', style({ transform: 'translateX(100%)' })),
-    query(':enter, :leave', style({ position: 'absolute', left: 0, right: 0 })),
+    query(':enter', style({ transform: 'translateX(100%)' }), { optional: true }),
+    query(':enter, :leave', style({ position: 'absolute', left: 0, right: 0 }), { optional: true }),
     group([
         query(':leave', [
-            animate('0.7s cubic-bezier(.35, 0, .25, 1)', keyframes([
-                style({ opacity: 1, transform: 'translateX(-25%)' }),
-                style({ opacity: 0.5, transform: 'translateX(-50%)' }),
-                style({ opacity: 0.75, transform: 'translateX(-75%)' }),
-                style({ opacity: 0, transform: 'translateX(-100%)' })
-            ])
-            )], { optional: true }),
+            animate(
+                '0.5s cubic-bezier(.35, 0, .25, 1)',
+                style({ transform: 'translateX(-100%)' })
+            ),
+        ], { optional: true }),
         query(':enter', [
-            animate('0.7s cubic-bezier(.35, 0, .25, 1)', keyframes([
-                style({ opacity: 0, transform: 'translateX(25%)' }),
-                style({ opacity: 0.5, transform: 'translateX(50%)' }),
-                style({ opacity: 0.75, transform: 'translateX(75%)' }),
-                style({ opacity: 1, transform: 'translateX(0)' })
-            ])
-            )], { optional: true }),
+            animate(
+                '0.5s cubic-bezier(.35, 0, .25, 1)',
+                style({ transform: 'translateX(0)' })
+            )
+        ], { optional: true })
     ])
 ];
 
